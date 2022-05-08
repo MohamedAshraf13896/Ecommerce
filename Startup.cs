@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Project.Models;
 using Microsoft.EntityFrameworkCore;
+using Project.Repositories;
 
 namespace Project
 {
@@ -30,6 +31,7 @@ namespace Project
             {
                 option.UseSqlServer(Configuration.GetConnectionString("cs"));
             });
+            services.AddScoped<IOrderDetail_Repo, OrderDetail_Repo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
