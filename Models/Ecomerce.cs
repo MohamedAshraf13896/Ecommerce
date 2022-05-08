@@ -15,6 +15,7 @@ namespace Project.Models
         {
             optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=Ecomerce;Integrated Security=True");
             base.OnConfiguring(optionsBuilder);
+            //dasasdsasadasdsa
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder) { modelBuilder.Entity<OrderDetails>().HasKey(o => new { o.OrderID, o.ProductID }); }
         public virtual DbSet<Product> Products { get; set; }
