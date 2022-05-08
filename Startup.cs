@@ -32,6 +32,8 @@ namespace Project
                 option.UseSqlServer(Configuration.GetConnectionString("cs"));
             });
             services.AddScoped<IOrderDetail_Repo, OrderDetail_Repo>();
+            services.AddScoped<IOrder_Repo, Order_Repo>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
