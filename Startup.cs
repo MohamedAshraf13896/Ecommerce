@@ -36,7 +36,9 @@ namespace Project
             {
                 option.UseSqlServer(Configuration.GetConnectionString("cs"));
             });
-            
+
+            services.AddScoped<IOrderDetail_Repo, OrderDetail_Repo>();
+            services.AddScoped<IOrder_Repo, Order_Repo>();
 
         }
 
