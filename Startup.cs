@@ -27,10 +27,16 @@ namespace Project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+            services.AddScoped<IPaymentRepo, PaymentRepo>();
+            services.AddScoped<IShipperRepo, ShipperRepo>();
             services.AddDbContext<Ecomerce>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("cs"));
             });
+
             services.AddScoped<IOrderDetail_Repo, OrderDetail_Repo>();
             services.AddScoped<IOrder_Repo, Order_Repo>();
 
