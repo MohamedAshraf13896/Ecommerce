@@ -13,11 +13,11 @@ namespace Project.Repositories
         }
         public List<Order> getall()
         {
-            return dp.Orders.ToList();
+            return dp.Orders.Include(o => o.Payment).Include(o => o.Shipper).ToList();
         }
-        public Order findByid(int id)
+        public Order findByid(int? id)
         {
-            return dp.Orders.FirstOrDefault(n => n.ID == id);
+            return dp.Orders.Include(o => o.Payment).Include(o => o.Shipper).FirstOrDefault(n => n.ID == id);
 
         }
         public int insert(Order order)
@@ -44,7 +44,7 @@ namespace Project.Repositories
             }
             return 0;
         }
-        public int delete(int id)
+        public int delete(int? id)
         {
             Order old = findByid(id);
             dp.Orders.Remove(old);
