@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Project.Models;
 using Microsoft.EntityFrameworkCore;
+using Project.Repositories;
 
 namespace Project
 {
@@ -26,10 +27,17 @@ namespace Project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+            services.AddScoped<IPaymentRepo, PaymentRepo>();
+            services.AddScoped<IShipperRepo, ShipperRepo>();
             services.AddDbContext<Ecomerce>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("cs"));
             });
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
