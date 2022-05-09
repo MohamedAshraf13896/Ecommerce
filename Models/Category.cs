@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Models
 {
@@ -13,5 +15,9 @@ namespace Project.Models
         //Foreign Keys
         //Navigation Properties
         public virtual List<Product> Products { get; set; }
+
+        //unmapped
+        [NotMapped]
+        public IFormFile imgFile { get; set; }
     }
 }
