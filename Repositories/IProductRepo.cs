@@ -5,10 +5,10 @@ namespace Project.Repositories
 {
     public interface IProductRepo
     {
-        int DeleteById(int id);
+        int DeleteById(int? id);
         int Edit(Product newProduct);
         List<Product> GetAll();
-        Product GetById(int id);
+        Product GetById(int? id);
         int Insert(Product prod);
     }
 }
