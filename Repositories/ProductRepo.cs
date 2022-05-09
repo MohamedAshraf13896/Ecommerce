@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Project.Models;
+﻿using Project.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,12 +14,12 @@ namespace Project.Repositories
 
         public List<Product> GetAll()
         {
-            return db.Products.Include(p=>p.Category).ToList();
+            return db.Products.ToList();
         }
 
         public Product GetById(int? id)
         {
-            return db.Products.Include(p => p.Category).SingleOrDefault(p => p.ID == id);
+            return db.Products.SingleOrDefault(p => p.ID == id);
         }
 
         public int Insert(Product prod)
