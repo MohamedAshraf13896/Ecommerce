@@ -30,15 +30,18 @@ namespace Project
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
-            services.AddScoped<IPaymentRepo, PaymentRepo>();
-            services.AddScoped<IShipperRepo, ShipperRepo>();
+            
             services.AddDbContext<Ecomerce>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("cs"));
             });
 
+            services.AddScoped<IPaymentRepo, PaymentRepo>();
+            services.AddScoped<IShipperRepo, ShipperRepo>();
             services.AddScoped<IOrderDetail_Repo, OrderDetail_Repo>();
             services.AddScoped<IOrder_Repo, Order_Repo>();
+            services.AddScoped<IProductRepo, ProductRepo>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
         }
 
