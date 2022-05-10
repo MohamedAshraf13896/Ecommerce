@@ -39,7 +39,7 @@ namespace Project.Repositories
                 old.TotalPrice = order.TotalPrice;
                 old.IsPaid = order.IsPaid;
                 old.SubTotal = order.SubTotal;
-
+                old.Address = order.Address;
                 return dp.SaveChanges();
             }
             return 0;
