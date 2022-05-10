@@ -14,6 +14,7 @@ namespace Project.Repositories
         {
             this.webHost = webHost;
         }
+
         public async Task<bool> StoreImage(string imageName,IFormFile image)
         {
             
@@ -36,7 +37,6 @@ namespace Project.Repositories
             }
             return false;
         }
-
 
         public bool DeleteImage(string imageName)
         {

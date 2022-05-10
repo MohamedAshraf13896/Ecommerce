@@ -8,6 +8,7 @@ namespace Project.Models
     {
         public int ID { get; set; }
         public int OrderNumber { get; set; }
+        public string Address { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime ShipDate { get; set; }
         public decimal SubTotal { get; set; }
