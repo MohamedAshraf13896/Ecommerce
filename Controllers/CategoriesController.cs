@@ -1,32 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project.Models;
 using Project.Repositories;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Project.Controllers
 {
     public class CategoriesController : Controller
     {
-        private readonly IHostingEnvironment webHost;
+        private readonly IImageRepo imageRepo;
         private readonly ICategoryRepository categoryRepository;
 
-        public CategoriesController(IHostingEnvironment webHost, ICategoryRepository _categoryRepository)
+        public CategoriesController(IImageRepo imageRepo, ICategoryRepository _categoryRepository)
         {
-            this.webHost = webHost;
+            this.imageRepo = imageRepo;
             categoryRepository = _categoryRepository;
         }
 
         // GET: Categories
         public IActionResult Index()
         {
-            return View( categoryRepository.GetAll());
+            return View(categoryRepository.GetAll());
         }
 
         // GET: Categories/Details/5
@@ -58,18 +54,21 @@ namespace Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                var saveImg = Path.Combine(webHost.WebRootPath, "assets","img","product",category.imgFile.FileName);
-                string imgext = Path.GetExtension(category.imgFile.FileName);
-                if (imgext == ".jpg" || imgext == ".png")
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + category.imgFile.FileName;
+                bool result = await imageRepo.StoreImage(uniqueFileName, category.imgFile);
+                if (result)
                 {
-                    using (var uploading = new FileStream(saveImg, FileMode.Create))
+                    category.Img = uniqueFileName;
+                    try
                     {
-                        await category.imgFile.CopyToAsync(uploading);
+                        categoryRepository.CreateCagtegory(category);
+                        return RedirectToAction(nameof(Index));
+                    }
+                    catch (Exception ex)
+                    {
+                        return View(category);
                     }
                 }
-                category.Img = category.imgFile.FileName;
-                categoryRepository.CreateCagtegory(category);
-                return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
@@ -95,7 +94,7 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,Category category)
+        public async Task<IActionResult> Edit(int id, Category category)
         {
             if (id != category.ID)
             {
@@ -106,6 +105,13 @@ namespace Project.Controllers
             {
                 try
                 {
+                    if (category.imgFile != null) 
+                    {
+                        if(category.Img != null) imageRepo.DeleteImage(category.Img);
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + category.imgFile.FileName;
+                        imageRepo.StoreImage(uniqueFileName, category.imgFile);
+                        category.Img = uniqueFileName;
+                    }
                     categoryRepository.UpdateCagtegory(id, category);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -144,8 +150,9 @@ namespace Project.Controllers
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
+            imageRepo.DeleteImage(categoryRepository.GetById(id).Img);
             categoryRepository.DeleteCagtegory(id);
             return RedirectToAction(nameof(Index));
         }
