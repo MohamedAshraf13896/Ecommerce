@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Models
@@ -19,5 +20,8 @@ namespace Project.Models
         //Navigation Properties
         public Category Category { get; set; }
         public virtual List<OrderDetails> OrderDetails { get; set; }
+
+        [NotMapped]
+        public IFormFile imgFile { get; set; }
     }
 }
