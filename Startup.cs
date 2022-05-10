@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Project.Models;
 using Microsoft.EntityFrameworkCore;
 using Project.Repositories;
+using Microsoft.AspNetCore.Identity;
 
 namespace Project
 {
@@ -36,6 +37,8 @@ namespace Project
                 option.UseSqlServer(Configuration.GetConnectionString("cs"));
             });
 
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<Ecomerce>();
             services.AddScoped<IPaymentRepo, PaymentRepo>();
             services.AddScoped<IShipperRepo, ShipperRepo>();
             services.AddScoped<IOrderDetail_Repo, OrderDetail_Repo>();
@@ -62,7 +65,7 @@ namespace Project
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
