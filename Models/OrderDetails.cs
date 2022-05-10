@@ -5,8 +5,15 @@ namespace Project.Models
 {
     public class OrderDetails
     {
+        [Display(Name = "Order Quantity")]
+        [Required(ErrorMessage = "Quantity is required")]
         public int Quantity { get; set; }
+
+        [Display(Name = "Order Discount")]
+        [Required(ErrorMessage = "Discount is required")]
         public decimal Discount { get; set; }
+
+        [Display(Name = "LinePrice")]
         public decimal LinePrice { get; set; }
 
         //Foreign Keys
