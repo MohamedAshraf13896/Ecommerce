@@ -13,7 +13,6 @@ namespace Project.Models
         public string Name { get; set; }
         [Display(Name = "Category Deascription")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "Image is required")]
         [Display(Name = "Catrgory Image")]
         public string Img { get; set; }
         [Display(Name = "Is Active")]
@@ -25,6 +24,8 @@ namespace Project.Models
 
         //unmapped
         [NotMapped]
+        [Display(Name = "Category Image")]
+        [Required(ErrorMessage = "Image is required")]
         public IFormFile imgFile { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Project.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -57,6 +58,11 @@ namespace Project.Repositories
             Product productToDelete = GetById(id);
             db.Products.Remove(productToDelete);
             return db.SaveChanges();
+        }
+
+        public Product GetByIdwithCategory(int? id)
+        {
+            return db.Products.Include(p=>p.Category).SingleOrDefault(p => p.ID == id);
         }
     }
 }

@@ -15,10 +15,20 @@ namespace Project.Repositories
             this.webHost = webHost;
         }
 
-        public async Task<bool> StoreImage(string imageName,IFormFile image)
+        public bool DeleteImage(string imageName)
         {
-            
-            var saveImg = Path.Combine(webHost.WebRootPath, "assets", "img", "product", imageName);
+            string _imageToBeDeleted = Path.Combine(webHost.WebRootPath, "assets", "img", "product", imageName);
+            if ((System.IO.File.Exists(_imageToBeDeleted)))
+            {
+                System.IO.File.Delete(_imageToBeDeleted);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> StoreImage(string folderName, string imageName, IFormFile image)
+        {
+            var saveImg = Path.Combine(webHost.WebRootPath, "assets", "img", folderName, imageName);
             string imgext = Path.GetExtension(image.FileName);
             if (imgext == ".jpg" || imgext == ".png")
             {
@@ -34,17 +44,6 @@ namespace Project.Repositories
                         return false;
                     }
                 }
-            }
-            return false;
-        }
-
-        public bool DeleteImage(string imageName)
-        {
-            string _imageToBeDeleted = Path.Combine(webHost.WebRootPath, "assets", "img", "product", imageName);
-            if ((System.IO.File.Exists(_imageToBeDeleted)))
-            {
-                System.IO.File.Delete(_imageToBeDeleted);
-                return true;
             }
             return false;
         }

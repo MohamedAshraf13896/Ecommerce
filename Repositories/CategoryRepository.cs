@@ -1,6 +1,7 @@
 ﻿using Project.Models;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Project.Repositories
 {
@@ -70,6 +71,9 @@ namespace Project.Repositories
             }
         }
 
-
+        public List<Category> GetAllWithProducts()
+        {
+            return context.Categories.Include(cat=>cat.Products).ToList();
+        }
     }
 }

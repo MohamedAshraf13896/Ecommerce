@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project.Models;
 using Project.Repositories;
+using Project.ViewModels;
 
 namespace Project.Controllers
 {
@@ -14,17 +15,26 @@ namespace Project.Controllers
     {
         private readonly IProductRepo productRepo;
         private readonly ICategoryRepository categoryRepository;
+        private readonly IImageRepo imageRepo;
 
-        public ProductsController(IProductRepo _ProductRepo, ICategoryRepository _categoryRepository)
+        public ProductsController(IProductRepo _ProductRepo, ICategoryRepository _categoryRepository, IImageRepo imageRepo)
         {
             productRepo = _ProductRepo;
             categoryRepository = _categoryRepository;
+            this.imageRepo = imageRepo;
         }
 
         // GET: Products
         public IActionResult Index()
         {
-            return View(productRepo.GetAll());
+            ProductCategoryVM vm = new ProductCategoryVM()
+            {
+                Categories = categoryRepository.GetAllWithProducts(),
+                Products=productRepo.GetAll(),
+             
+            };
+
+            return View(vm);
         }
 
         // GET: Products/Details/5
@@ -35,7 +45,7 @@ namespace Project.Controllers
                 return NotFound();
             }
 
-            var product = productRepo.GetById(id);
+            var product = productRepo.GetByIdwithCategory(id);
             if (product == null)
             {
                 return NotFound();
@@ -56,12 +66,26 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ID,Name,Description,Color,UnitPrice,Discount,Img,Rate,CategoryID")] Product product)
+        public async Task<IActionResult> Create( Product product)
         {
             if (ModelState.IsValid)
             {
-                productRepo.Insert(product);
-                return RedirectToAction(nameof(Index));
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + product.imgFile.FileName;
+                bool result = await imageRepo.StoreImage("product", uniqueFileName, product.imgFile);
+                if (result)
+                {
+                    product.Img = uniqueFileName;
+                    try
+                    {
+                        productRepo.Insert(product);
+                        return RedirectToAction(nameof(Index));
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewData["CategoryID"] = categoryRepository.GetAll();
+                        return View(product);
+                    }
+                }                
             }
             ViewData["CategoryID"] = categoryRepository.GetAll();
             return View(product);
@@ -100,6 +124,13 @@ namespace Project.Controllers
             {
                 try
                 {
+                    if (product.imgFile != null)
+                    {
+                        if (product.Img != null) imageRepo.DeleteImage(product.Img);
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + product.imgFile.FileName;
+                        imageRepo.StoreImage("product", uniqueFileName, product.imgFile);
+                        product.Img = uniqueFileName;
+                    }
                     productRepo.Edit(product);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -141,6 +172,7 @@ namespace Project.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
+            imageRepo.DeleteImage(productRepo.GetById(id).Img);
             productRepo.DeleteById(id);
             return RedirectToAction(nameof(Index));
         }

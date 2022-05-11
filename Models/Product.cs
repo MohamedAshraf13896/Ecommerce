@@ -9,7 +9,7 @@ namespace Project.Models
     {
         public int ID { get; set; }
 
-        [Display(Name = "Name")]
+        [Display(Name = "Product Name")]
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
 
@@ -29,19 +29,23 @@ namespace Project.Models
         [Required(ErrorMessage = "Discount is required")]
         public decimal Discount { get; set; }
 
-        [Display(Name = "Image")]
-        [Required(ErrorMessage = "Image is required")]
         public string Img { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Product Image")]
+        [Required(ErrorMessage = "Image is required")]
+        public IFormFile imgFile { get; set; }
 
         public int Rate { get; set; } //why should i enter rate
         //Foreign Keys
+        [Display(Name="Category")]
         [ForeignKey("Category")]
+        [Required]
         public int CategoryID { get; set; }
         //Navigation Properties
         public Category Category { get; set; }
         public virtual List<OrderDetails> OrderDetails { get; set; }
 
-        [NotMapped]
-        public IFormFile imgFile { get; set; }
+        
     }
 }

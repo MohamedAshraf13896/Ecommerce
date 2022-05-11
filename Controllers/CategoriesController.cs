@@ -55,7 +55,7 @@ namespace Project.Controllers
             if (ModelState.IsValid)
             {
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + category.imgFile.FileName;
-                bool result = await imageRepo.StoreImage(uniqueFileName, category.imgFile);
+                bool result = await imageRepo.StoreImage("category",uniqueFileName, category.imgFile);
                 if (result)
                 {
                     category.Img = uniqueFileName;
@@ -109,7 +109,7 @@ namespace Project.Controllers
                     {
                         if(category.Img != null) imageRepo.DeleteImage(category.Img);
                         string uniqueFileName = Guid.NewGuid().ToString() + "_" + category.imgFile.FileName;
-                        imageRepo.StoreImage(uniqueFileName, category.imgFile);
+                        imageRepo.StoreImage("category",uniqueFileName, category.imgFile);
                         category.Img = uniqueFileName;
                     }
                     categoryRepository.UpdateCagtegory(id, category);

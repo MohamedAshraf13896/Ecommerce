@@ -6,6 +6,6 @@ namespace Project.Repositories
     public interface IImageRepo
     {
         bool DeleteImage(string imageName);
-        Task<bool> StoreImage(string imageName, IFormFile image);
+        Task<bool> StoreImage(string folderName,string imageName, IFormFile image);
     }
 }
