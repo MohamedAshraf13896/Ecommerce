@@ -8,7 +8,7 @@ namespace Project.Repositories
         int CreateCagtegory(Category Newcategory);
         int DeleteCagtegory(int id);
         List<Category> GetAll();
-        Category GetById(int id);
+        Category GetById(int? id);
         int UpdateCagtegory(int id, Category Newcategory);
     }
 }

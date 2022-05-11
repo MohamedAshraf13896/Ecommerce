@@ -16,7 +16,7 @@ namespace Project.Repositories
         {
             return context.Categories.ToList();
         }
-        public Category GetById(int id)
+        public Category GetById(int? id)
         {
             return context.Categories.SingleOrDefault(c => c.ID == id);
         }

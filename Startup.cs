@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Project.Models;
 using Microsoft.EntityFrameworkCore;
 using Project.Repositories;
+using Microsoft.AspNetCore.Identity;
 
 namespace Project
 {
@@ -36,13 +37,15 @@ namespace Project
                 option.UseSqlServer(Configuration.GetConnectionString("cs"));
             });
 
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<Ecomerce>();
             services.AddScoped<IPaymentRepo, PaymentRepo>();
             services.AddScoped<IShipperRepo, ShipperRepo>();
             services.AddScoped<IOrderDetail_Repo, OrderDetail_Repo>();
             services.AddScoped<IOrder_Repo, Order_Repo>();
             services.AddScoped<IProductRepo, ProductRepo>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-
+            services.AddScoped<IImageRepo, ImageRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +65,7 @@ namespace Project
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

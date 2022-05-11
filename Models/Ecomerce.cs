@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 namespace Project.Models
 {
-    public class Ecomerce:DbContext
+    public class Ecomerce:IdentityDbContext<ApplicationUser>
     {
         public Ecomerce():base()
         {
@@ -9,14 +10,17 @@ namespace Project.Models
         }
         public Ecomerce(DbContextOptions options): base(options)
         {
-
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=Ecomerce;Integrated Security=True");
             base.OnConfiguring(optionsBuilder);
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder) { modelBuilder.Entity<OrderDetails>().HasKey(o => new { o.OrderID, o.ProductID }); }
+        protected override void OnModelCreating(ModelBuilder modelBuilder) { 
+            modelBuilder.Entity<OrderDetails>().HasKey(o => new { o.OrderID, o.ProductID });
+            base.OnModelCreating(modelBuilder);
+        }
+
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
