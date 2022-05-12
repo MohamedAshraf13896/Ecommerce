@@ -42,7 +42,7 @@ namespace Project.Controllers
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(newUser, false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Categories");
                 }
                 else
                 {
@@ -101,6 +101,45 @@ namespace Project.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public IActionResult RegisterAdmin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterAdmin(RegisterVM userVm)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser newUser = new ApplicationUser()
+                {
+                    UserName = userVm.UserName,
+                    Email = userVm.Email,
+                    Address = userVm.Address,
+                    //PasswordHash = userVm.Password
+                };
+                IdentityResult result = await userManager.CreateAsync(newUser, userVm.Password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(newUser, "Admin");
+                    //await signInManager.SignInAsync(newUser, false);
+                    return RedirectToAction("Index", "Categories");
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
+
+            }
+            return View(userVm);
+        }
+
     }
 
 }
