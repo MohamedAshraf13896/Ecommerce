@@ -20,14 +20,14 @@
 
 						<input asp-for="Name" placeholder="Name"
 							   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required
-							   class="single-input">
+							   class="single-input-secondary">
 						<span asp-validation-for="Name" class="text-danger"></span>
 					</div>
 					<div class="mt-10">
 						<label asp-for="Description" class="form-label font-italic text-muted"></label>
 
 						<input asp-for="Description" placeholder="Description" onfocus="this.placeholder = ''"
-							   onblur="this.placeholder = 'Description'" required class="single-input">
+							   onblur="this.placeholder = 'Description'" required class="single-input-secondary">
 						<span asp-validation-for="Description" class="text-danger"></span>
 
 					</div>
@@ -36,7 +36,7 @@
 						<label asp-for="Color" class="form-label font-italic text-muted"></label>
 
 						<input asp-for="Color" placeholder="Color" onfocus="this.placeholder = ''"
-							   onblur="this.placeholder = 'Color'" required class="single-input">
+							   onblur="this.placeholder = 'Color'" required class="single-input-secondary">
 						<span asp-validation-for="Color" class="text-danger"></span>
 
 					</div>
@@ -45,7 +45,7 @@
 						<label asp-for="UnitPrice" class="form-label font-italic text-muted"></label>
 
 						<input asp-for="UnitPrice" placeholder="UnitPrice" onfocus="this.placeholder = ''"
-							   onblur="this.placeholder = 'UnitPrice'" required class="single-input">
+							   onblur="this.placeholder = 'UnitPrice'" required class="single-input-secondary">
 						<span asp-validation-for="UnitPrice" class="text-danger"></span>
 
 					</div>
@@ -53,7 +53,7 @@
 						<label asp-for="Discount" class="form-label font-italic text-muted"></label>
 
 						<input asp-for="Discount" placeholder="Discount" onfocus="this.placeholder = ''"
-							   onblur="this.placeholder = 'Discount'" required class="single-input">
+							   onblur="this.placeholder = 'Discount'" required class="single-input-secondary">
 						<span asp-validation-for="Discount" class="text-danger"></span>
 
 					</div>
@@ -61,7 +61,7 @@
 						<label asp-for="imgFile" class="form-label font-italic text-muted"></label>
 
 						<input asp-for="imgFile" placeholder="imgFile" onfocus="this.placeholder = ''"
-							   onblur="this.placeholder = 'imgFile'" required class="single-input">
+							   onblur="this.placeholder = 'imgFile'" required class="single-input-secondary">
 						<span asp-validation-for="imgFile" class="text-danger"></span>
 
 					</div>
@@ -70,14 +70,14 @@
 						<label asp-for="Rate" class="form-label font-italic text-muted"></label>
 
 						<input asp-for="Rate" placeholder="Rate" onfocus="this.placeholder = ''"
-							   onblur="this.placeholder = 'Rate'" required class="single-input">
+							   onblur="this.placeholder = 'Rate'" required class="single-input-secondary">
 						<span asp-validation-for="Rate" class="text-danger"></span>
 
 					</div>
 					<div class="mt-10">
 						<label asp-for="CategoryID" class="form-label font-italic text-muted"></label>
 
-						<div class="form-select" id="default-select_1">
+						<div class="form-select " id="default-select_1">
 							<select asp-for="CategoryID" asp-items="CategoryItems" class="form-control">
 								@foreach (Category item in ViewBag.Categories)
 								{
