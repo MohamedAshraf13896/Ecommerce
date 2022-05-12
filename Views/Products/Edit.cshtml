@@ -1,69 +1,80 @@
 ﻿@model Project.Models.Product
 
 @{
-    ViewData["Title"] = "Edit";
+	ViewData["Title"] = "Edit";
+	Layout = "_CreateLayout";
 }
 
-<h1>Edit</h1>
+<div class="container ">
+	<h1 class="l font-italic text-muted">Edit Product</h1>
+	<div class="section-top-border">
+		<div class=" row">
+			<div class="col-lg-8 col-md-8">
+				<form asp-action="Edit" enctype="multipart/form-data">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<input type="hidden" asp-for="ID" />
+					<div class="mt-10">
+						<label asp-for="Name" class="form-label font-italic text-muted "></label>
+						<input asp-for="Name" placeholder="Name"
+							   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required
+							   class="single-input-secondary">
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="mt-10">
+						<label asp-for="Description" class="form-label font-italic text-muted"></label>
 
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Color" class="control-label"></label>
-                <input asp-for="Color" class="form-control" />
-                <span asp-validation-for="Color" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UnitPrice" class="control-label"></label>
-                <input asp-for="UnitPrice" class="form-control" />
-                <span asp-validation-for="UnitPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Discount" class="control-label"></label>
-                <input asp-for="Discount" class="form-control" />
-                <span asp-validation-for="Discount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="imgFile" class="control-label"></label>
-                <input type="file" asp-for="imgFile" class="form-control" />
-                <span asp-validation-for="imgFile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rate" class="control-label"></label>
-                <input asp-for="Rate" class="form-control" />
-                <span asp-validation-for="Rate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryID" class="control-label"></label>
-                <select asp-for="CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
-                <span asp-validation-for="CategoryID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+						<input asp-for="Description" placeholder="Description" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'Description'" required class="single-input-secondary">
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+					<div class="mt-10">
+						<label asp-for="Color" class="form-label font-italic text-muted"></label>
+						<input asp-for="Color" placeholder="Color" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'Color'" required class="single-input-secondary">
+						<span asp-validation-for="Color" class="text-danger"></span>
+					</div>
+					<div class="mt-10">
+						<label asp-for="UnitPrice" class="form-label font-italic text-muted"></label>
+						<input asp-for="UnitPrice" placeholder="UnitPrice" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'UnitPrice'" required class="single-input-secondary">
+						<span asp-validation-for="UnitPrice" class="text-danger"></span>
+					</div>
+					<div class="mt-10">
+						<label asp-for="Discount" class="form-label font-italic text-muted"></label>
+						<input asp-for="Discount" placeholder="Discount" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'Discount'" required class="single-input-secondary">
+						<span asp-validation-for="Discount" class="text-danger"></span>
+					</div>
+					<div class="mt-10">
+						<label asp-for="imgFile" class="form-label font-italic text-muted"></label>
+						<input asp-for="imgFile" placeholder="imgFile" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'imgFile'" required class="single-input-secondary">
+						<span asp-validation-for="imgFile" class="text-danger"></span>
+					</div>
+					<div class="mt-10">
+						<label asp-for="Rate" class="form-label font-italic text-muted"></label>
+						<input asp-for="Rate" placeholder="Rate" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'Rate'" required class="single-input-secondary">
+						<span asp-validation-for="Rate" class="text-danger"></span>
+					</div>
+					<div class="form-select">
+						<label asp-for="CategoryID" class="form-label font-italic text-muted"></label>
+						<select asp-for="CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
+						<span asp-validation-for="CategoryID" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Save" class="btn btn-primary" />
+						<a asp-action="Index" class="btn btn-danger">Back to List</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+	await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

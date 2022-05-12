@@ -1,10 +1,10 @@
 ﻿@model Project.Models.Category
 
 @{
-	ViewData["Title"] = "Create";
+
+    ViewData["Title"] = "Create";
 	Layout = "_CreateLayout";
 }
-
 
 <div class="container ">
 	<h1 class="l font-italic text-muted">Create Category</h1>
@@ -16,11 +16,46 @@
 
 					<div class="mt-10">
 						<label asp-for="Name" class="form-label font-italic text-muted "></label>
+
 						<input asp-for="Name" placeholder="Name"
 							   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required
 							   class="single-input-secondary">
 						<span asp-validation-for="Name" class="text-danger"></span>
 					</div>
+
+             <div class="mt-10">
+						<label asp-for="Description" class="form-label font-italic text-muted "></label>
+
+						<input asp-for="Description" placeholder="Description"
+							   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required
+							   class="single-input-secondary">
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+
+              <div class="mt-10">
+						<label asp-for="imgFile" class="form-label font-italic text-muted "></label>
+
+						<input asp-for="imgFile" placeholder="image"
+							   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required
+							   class="single-input-secondary">
+						<span asp-validation-for="imgFile" class="text-danger"></span>
+					</div>
+            
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+				<a asp-action="Index" class="btn btn-danger">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+   </div>
+
 
 					<div class="mt-10">
 						<label asp-for="Description" class="form-label font-italic text-muted"></label>
