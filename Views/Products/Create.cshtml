@@ -1,76 +1,104 @@
 ﻿@model Product
 
 @{
-    ViewData["Title"] = "Create";
-    SelectList CategoryItems = new SelectList(ViewBag.Categories, "ID", "Name");
-    Layout = "_Layout";
+
+	ViewData["Title"] = "Create";
+	SelectList CategoryItems = new SelectList(ViewBag.Categories, "ID", "Name");
+	Layout = "_CreateLayout";
 }
 
-<h1>Create</h1>
+<div class="container ">
+	<h1 class="l font-italic text-muted">Create Product</h1>
+	<div class="section-top-border">
+		<div class=" row">
+			<div class="col-lg-8 col-md-8">
+				<form asp-action="Create" enctype="multipart/form-data">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Color" class="control-label"></label>
-                <input asp-for="Color" class="form-control" />
-                <span asp-validation-for="Color" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UnitPrice" class="control-label"></label>
-                <input asp-for="UnitPrice" class="form-control" />
-                <span asp-validation-for="UnitPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Discount" class="control-label"></label>
-                <input asp-for="Discount" class="form-control" />
-                <span asp-validation-for="Discount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="imgFile" class="control-label"></label>
-                <input asp-for="imgFile" type="file" class="form-control" />
-                <span asp-validation-for="imgFile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rate" class="control-label"></label>
-                <input asp-for="Rate" class="form-control" />
-                <span asp-validation-for="Rate" class="text-danger"></span>
-            </div>
-            <div>
-                <label asp-for="CategoryID"></label>
-                <select asp-for="CategoryID" asp-items="CategoryItems" class="form-control">
-                    <option value="0">---- Select Category ----</option>
-                </select>
-                <span asp-validation-for="CategoryID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+					<div class="mt-10">
+						<label asp-for="Name" class="form-label font-italic text-muted "></label>
+
+						<input asp-for="Name" placeholder="Name"
+							   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required
+							   class="single-input-secondary">
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="mt-10">
+						<label asp-for="Description" class="form-label font-italic text-muted"></label>
+
+						<input asp-for="Description" placeholder="Description" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'Description'" required class="single-input-secondary">
+						<span asp-validation-for="Description" class="text-danger"></span>
+
+					</div>
+
+					<div class="mt-10">
+						<label asp-for="Color" class="form-label font-italic text-muted"></label>
+
+						<input asp-for="Color" placeholder="Color" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'Color'" required class="single-input-secondary">
+						<span asp-validation-for="Color" class="text-danger"></span>
+
+					</div>
+
+					<div class="mt-10">
+						<label asp-for="UnitPrice" class="form-label font-italic text-muted"></label>
+
+						<input asp-for="UnitPrice" placeholder="UnitPrice" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'UnitPrice'" required class="single-input-secondary">
+						<span asp-validation-for="UnitPrice" class="text-danger"></span>
+
+					</div>
+					<div class="mt-10">
+						<label asp-for="Discount" class="form-label font-italic text-muted"></label>
+
+						<input asp-for="Discount" placeholder="Discount" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'Discount'" required class="single-input-secondary">
+						<span asp-validation-for="Discount" class="text-danger"></span>
+
+					</div>
+					<div class="mt-10">
+						<label asp-for="imgFile" class="form-label font-italic text-muted"></label>
+
+						<input asp-for="imgFile" placeholder="imgFile" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'imgFile'" required class="single-input-secondary">
+						<span asp-validation-for="imgFile" class="text-danger"></span>
+
+					</div>
+
+					<div class="mt-10">
+						<label asp-for="Rate" class="form-label font-italic text-muted"></label>
+
+						<input asp-for="Rate" placeholder="Rate" onfocus="this.placeholder = ''"
+							   onblur="this.placeholder = 'Rate'" required class="single-input-secondary">
+						<span asp-validation-for="Rate" class="text-danger"></span>
+
+					</div>
+					<div class="mt-10">
+						<label asp-for="CategoryID" class="form-label font-italic text-muted"></label>
+
+						<div class="form-select " id="default-select_1">
+							<select asp-for="CategoryID" asp-items="CategoryItems" class="form-control">
+								@foreach (Category item in ViewBag.Categories)
+								{
+									<option value="@item.ID">@item.Name</option>
+								}
+							</select>
+							<span asp-validation-for="CategoryID" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="mt-10">
+						<input type="submit" value="Create" class="btn btn-primary" />
+						<a asp-action="Index" class="btn btn-danger">Back to List</a>
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-
-<style>
-    div{ margin-top:15px;}
-</style>
 
 @section Scripts
 {

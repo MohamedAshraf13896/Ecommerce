@@ -117,7 +117,7 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ID,Name,Description,Color,UnitPrice,Discount,Img,Rate,CategoryID")] Product product)
+        public IActionResult Edit(int id,  Product product)
         {
             if (id != product.ID)
             {
