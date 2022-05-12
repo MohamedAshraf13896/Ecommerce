@@ -25,6 +25,13 @@ namespace Project.Controllers
             return View(categoryRepository.GetAll());
         }
 
+        //ADMIN ROLE
+        // GET: Categories
+        public IActionResult List()
+        {
+            return View(categoryRepository.GetAll());
+        }
+
         // GET: Categories/Details/5
         public IActionResult Details(int? id)
         {

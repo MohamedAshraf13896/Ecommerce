@@ -1,10 +1,10 @@
 ﻿@model Product
 
 @{
+
 	ViewData["Title"] = "Create";
 	SelectList CategoryItems = new SelectList(ViewBag.Categories, "ID", "Name");
 	Layout = "_CreateLayout";
-
 }
 
 <div class="container ">
