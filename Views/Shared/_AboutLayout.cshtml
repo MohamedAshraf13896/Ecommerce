@@ -85,106 +85,119 @@
                                     </div>
                                 </li>
 
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle"
-                                       href="blog.html"
-                                       id="navbarDropdown_3"
-                                       role="button"
-                                       data-toggle="dropdown"
-                                       aria-haspopup="true"
-                                       aria-expanded="false">
-                                        About Us
-                                    </a>
-                                    <div class="dropdown-menu"
-                                         aria-labelledby="navbarDropdown_2">
-                                        <a class="nav-link" asp-action="ContactUs" asp-controller="Navigator">Contact Us</a>
-                                        <a class="nav-link" asp-action="AboutUs" asp-controller="Navigator">About Us</a>
-                                    </div>
-                                </li>
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="blog.html"
+                      id="navbarDropdown_3"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      About Us
+                    </a>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="navbarDropdown_2"
+                    >
+                      <a class="dropdown-item" asp-action="ContactUs" asp-controller="Navigator">Contact Us</a>
+                      <a class="dropdown-item" asp-action="AboutUs" asp-controller="Navigator">About Us</a>
+                    </div>
+                  </li>
 
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle"
-                                       href="blog.html"
-                                       id="navbarDropdown_3"
-                                       role="button"
-                                       data-toggle="dropdown"
-                                       aria-haspopup="true"
-                                       aria-expanded="false">
-                                            Admin
-                                        </a>
-                                        <div class="dropdown-menu"
-                                         aria-labelledby="navbarDropdown_2">
-                                            <a class="nav-link" asp-action="RegisterAdmin" asp-controller="Account">Products List</a>
-                                            <a class="nav-link" asp-action="List" asp-controller="Products">Products List</a>
-                                            <a class="nav-link" asp-action="Create" asp-controller="Prodycts">Add Product</a>
-                                            <a class="nav-link" asp-action="Index" asp-controller="Categories">Categories List</a>
-                                            <a class="nav-link" asp-action="Create" asp-controller="Categories">Add Category</a>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div class="hearer_icon d-flex">
-                            <a id="search_1" href="javascript:void(0)">
-                                <span class="iconify" data-icon="ei:search" data-width="20" data-height="20"></span>
-                            </a>
-                            <a href="">
-                                <span class="iconify" data-icon="akar-icons:heart" data-width="20" data-height="20"></span>
-                            </a>
-                            <div class="dropdown cart">
-                                <a class="dropdown-toggle"
-                                   href="#"
-                                   id="navbarDropdown3"
-                                 
-                                   data-toggle="modal" data-target="#exampleModal"
-                                   role="button"
-                                   aria-haspopup="true"
-                                   aria-expanded="false">
-                                    <span class="iconify" data-icon="bi:cart-plus-fill" data-width="20" data-height="20"></span>
-                                </a>
-                            </div>
-                        </div>
-                        <ul class="navbar-nav">
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <li class="nav-item">
-                                    Welcome @User.Identity.Name
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link  btn btn-primary" asp-action="Logout" asp-controller="Account"> Logout</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link  btn btn-outline-primary" asp-action="Login" asp-controller="Account"> Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link  btn btn-primary" asp-action="Register" asp-controller="Account"> Register</a>
-                                </li>
-
-                            }
-                        </ul>
-                    </nav>
+                  @if(User.IsInRole("Admin"))
+                  {
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="blog.html"
+                      id="navbarDropdown_3"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Admin
+                    </a>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="navbarDropdown_2"
+                    >
+                    <a class="nav-link" asp-action="RegisterAdmin" asp-controller="Account">Products List</a>
+                      <a class="nav-link" asp-action="List" asp-controller="Products">Products List</a>
+                      <a class="nav-link" asp-action="Create" asp-controller="Prodycts">Add Product</a>
+                      <a class="nav-link" asp-action="Index" asp-controller="Categories">Categories List</a>
+                      <a class="nav-link" asp-action="Create" asp-controller="Categories">Add Category</a>
+                    </div>
+                  </li>
+                  }
+                </ul>
+              </div>
+              <div class="hearer_icon d-flex">
+                <a id="search_1" href="javascript:void(0)">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </a>
+                <a href="">
+                    <i class="fa-solid fa-heart color-red" style="color:red"></i>
+                </a>
+                <div class="dropdown cart">
+                  <a
+                    class="dropdown-toggle"
+                    href="#"
+                    id="navbarDropdown3"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa-solid fa-cart-shopping" style="color:blue"></i>
+                  </a>
                 </div>
-            </div>
+              </div>
+              <ul class="navbar-nav">
+              @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            Welcome @User.Identity.Name
+                        </li> 
+                           <li class="nav-item">
+                        <a class="nav-link  btn btn-primary" asp-action="Logout" asp-controller="Account"> Logout</a>
+                      </li>         
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                        <a class="nav-link  btn btn-outline-primary mx-2" asp-action="Login" asp-controller="Account"> Login</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link  btn btn-primary text-white" asp-action="Register" asp-controller="Account"> Register</a>
+                      </li>
+                                    
+                    }
+                    </ul>
+            </nav>
+          </div>
         </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text"
-                           class="form-control"
-                           id="search_input"
-                           placeholder="Search Here" />
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close it"
-                          id="close_search"
-                          title="Close Search"></span>
-                </form>
-            </div>
+      </div>
+      <div class="search_input" id="search_input_box">
+        <div class="container">
+          <form class="d-flex justify-content-between search-inner">
+            <input
+              type="text"
+              class="form-control"
+              id="search_input"
+              placeholder="Search Here"
+            />
+            <button type="submit" class="btn"></button>
+            <span
+              class="ti-close it"
+              id="close_search"
+              title="Close Search"
+            ></span>
+          </form>
         </div>
+      </div>
     </header>
     <!-- Header part end-->
     @RenderSection("topSection", required: false)
