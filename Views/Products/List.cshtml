@@ -2,46 +2,66 @@
 
 @{
     ViewData["Title"] = "List";
+    int x = 1;
 }
 
-<h1>List</h1>
+
+<div class="container">
+    <div class="row">
+<h1>Products List</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-pt" asp-action="Create">Create New Product</a>
 </p>
+        <div class="progress-table-wrap">
+					<div class="progress-table">
+						<div class="table-head">
+							<div class="serial">#</div>
+							<div class="country">Name</div>
+							<div class="country">Description</div>
+							<div class="country">Color</div>
+							<div class="country">Unit Price</div>
+							<div class="country">Discount</div>
+							<div class="country">Image</div>
+							<div class="country">Rate</div>
+							<div class="country">Category</div>
+							<div class="country">Cotrols</div>
+						</div>
+                        @foreach (var item in Model) {
+						<div class="table-row">
+							<div class="serial">@x++</div>
+							<div class="country">
+                                @item.Name
+                            </div>
+                            <div class="country">
+                                @item.Description
+                            </div>
+                            <div class="country">
+                                @item.Color
+                            </div>
+                            <div class="country">
+                                @item.UnitPrice
+                            </div>
+                            <div class="country">@item.Discount</div>
+                            <div class="country">
+                                 <img src="/assets/img/product/@item.Img" alt="img">
+                            </div>
+                            
+                            <div class="country">@item.Rate</div>
+                            <div class="country">@item.Category.Name</div>
+							<div class="visit">
+                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </div>
+						</div>
+                        }
+					</div>
+				</div>
+    </div>
+</div>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Color)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UnitPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Img)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryID)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+
     <tbody>
 @foreach (var item in Model) {
         <tr>
