@@ -4,6 +4,9 @@ using Project.Models;
 using Project.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
+using System.Linq;
+using System.Security.Claims;
 
 namespace Project.Controllers
 {
@@ -79,6 +82,8 @@ namespace Project.Controllers
                         //claims.Add(new Claim("Address", "Cairo"));
                         //await signInManager.SignInWithClaimsAsync(user, userVm.RememberMe, claims);
                         await signInManager.SignInAsync(user, userVm.RememberMe);
+
+
                         if (!string.IsNullOrEmpty(userVm.ReturnUrl) && Url.IsLocalUrl(userVm.ReturnUrl))
                         {
                             //return RedirectToAction("Index", "Home");
@@ -86,7 +91,7 @@ namespace Project.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Categories");
                         }
                     }
                 }
@@ -96,8 +101,13 @@ namespace Project.Controllers
         }
 
         //[HttpPost]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string cart)
         {
+            string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            ApplicationUser user = await userManager.FindByIdAsync(id);
+
+            //add claims to db
+            await userManager.AddClaimAsync(user, new Claim("Cart", cart));
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }

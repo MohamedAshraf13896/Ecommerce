@@ -1,4 +1,5 @@
 ﻿
+
 let sessionUserProducts = JSON.parse(localStorage.getItem("CartProductList") || "[]");
 
 let elm = document.getElementById('con');
@@ -111,6 +112,9 @@ function deleteProduct(proId) {
     
 }
 
-function openModal() {
-
+function GotToLogOut() {
+    let userCart = localStorage.getItem("CartProductList") || ""
+    $.ajax({
+        url: "/Account/logout?cart=" + userCart
+    });
 }
