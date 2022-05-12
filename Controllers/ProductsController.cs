@@ -36,6 +36,10 @@ namespace Project.Controllers
 
             return View(vm);
         }
+        public IActionResult List()
+        {
+            return View();
+        }
 
         // GET: Products/Details/5
         public IActionResult Details(int? id)
@@ -82,12 +86,12 @@ namespace Project.Controllers
                     }
                     catch (Exception ex)
                     {
-                        ViewData["CategoryID"] = categoryRepository.GetAll();
+                        ViewData["Categories"] = categoryRepository.GetAll();
                         return View(product);
                     }
                 }                
             }
-            ViewData["CategoryID"] = categoryRepository.GetAll();
+            ViewData["Categories"] = categoryRepository.GetAll();
             return View(product);
         }
 
