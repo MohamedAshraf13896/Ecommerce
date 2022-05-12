@@ -166,11 +166,13 @@
                     {
                         
                           <div class="single_product_item">
+
+                           
                             <img src="/assets/img/product/@item.Img" alt="">
                             <div class="single_product_text">
                                 <h4>@item.Name</h4>
                                 <h3>@item.UnitPrice</h3>
-                                <a class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    <a   onclick="AddTOcart('@item.ID','@item.Name','@item.UnitPrice')"  name='@item.ID' class="add_cart">+ add to cart<i class="ti-heart"></i></a>
                             </div>
                         </div>
                     }
