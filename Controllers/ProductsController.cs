@@ -38,7 +38,7 @@ namespace Project.Controllers
         }
         public IActionResult List()
         {
-            return View();
+            return View(productRepo.GetAll());
         }
 
         // GET: Products/Details/5
