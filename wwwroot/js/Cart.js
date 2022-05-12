@@ -110,3 +110,7 @@ function deleteProduct(proId) {
     })
     
 }
+
+function openModal() {
+
+}
