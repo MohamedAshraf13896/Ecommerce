@@ -13,6 +13,7 @@
 <p>
     <a class="btn btn-pt" asp-action="Create">Create New Product</a>
 </p>
+
         <div class="progress-table-wrap">
 					<div class="progress-table">
 						<div class="table-head">
@@ -50,10 +51,10 @@
                             <div class="country">@item.Rate</div>
                             <div class="country">@item.Category.Name</div>
 							<div class="visit">
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Edit", "Edit", new { id = @item.ID }) |
 
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Details", "Details", new { id = @item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = @item.ID })
                 </div>
 						</div>
                         }

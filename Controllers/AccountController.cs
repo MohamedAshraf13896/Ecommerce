@@ -125,7 +125,7 @@ namespace Project.Controllers
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(newUser, "Admin");
-                    //await signInManager.SignInAsync(newUser, false);
+                    await signInManager.SignInAsync(newUser, false);
                     return RedirectToAction("Index", "Categories");
                 }
                 else
