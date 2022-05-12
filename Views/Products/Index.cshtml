@@ -22,7 +22,7 @@
                                 @foreach (var cat in Model.Categories)
                                 {
                                     <li>
-                                        <a href="#">cat.Name</a>
+                                        <a href="#">@cat.Name</a>
                                     <span>(@{cat.Products.Count().ToString();})</span>
                                 </li>
                                }
@@ -166,11 +166,11 @@
                     {
                         
                           <div class="single_product_item">
-                            <img src="img/product/product_1.png" alt="">
+                            <img src="/assets/img/product/@item.Img" alt="">
                             <div class="single_product_text">
-                                <h4>item.Name</h4>
-                                <h3>item.UnitPrice</h3>
-                                <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                <h4>@item.Name</h4>
+                                <h3>@item.UnitPrice</h3>
+                                <a class="add_cart">+ add to cart<i class="ti-heart"></i></a>
                             </div>
                         </div>
                     }
