@@ -1,7 +1,7 @@
 ﻿
 
-let sessionUserProducts = JSON.parse(localStorage.getItem("CartProductList") || "[]");
-
+let sessionUserProducts = getCartFromClaim();
+console.log(sessionUserProducts);
 let elm = document.getElementById('con');
 LoadModalContent();
  
@@ -116,5 +116,13 @@ function GotToLogOut() {
     let userCart = localStorage.getItem("CartProductList") || ""
     $.ajax({
         url: "/Account/logout?cart=" + userCart
+    });
+}
+
+function getCartFromClaim() {
+    $.ajax({
+        url: "/account/getUserCartClaim", success: function (result) {
+            return JSON.parse(result);
+        }
     });
 }

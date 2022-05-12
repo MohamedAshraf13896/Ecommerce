@@ -150,6 +150,15 @@ namespace Project.Controllers
             return View(userVm);
         }
 
+        public async Task<IActionResult> getUserCartClaim()
+        {
+            string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            ApplicationUser user = await userManager.FindByIdAsync(id);
+            var claims = await userManager.GetClaimsAsync(user);
+            var result = claims.FirstOrDefault(c => c.Type == "Cart").Value;
+            return Json(result);
+        }
+
     }
 
 }
