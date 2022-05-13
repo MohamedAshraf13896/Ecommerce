@@ -19,8 +19,7 @@ namespace Project.Repositories
         }
         public Order findByid(int? id)
         {
-            return dp.Orders.Include(o => o.Payment).Include(o => o.Shipper).FirstOrDefault(n => n.ID == id);
-
+            return dp.Orders.Include(o => o.Payment).Include(o => o.Shipper).Include(o=>o.Customer).Include(o=>o.OrderDetails).ThenInclude(o=>o.Product).FirstOrDefault(n => n.ID == id);
         }
         public int insert(Order order)
         {

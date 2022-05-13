@@ -84,8 +84,9 @@
                                     </a>
                                     <div class="dropdown-menu"
                                          aria-labelledby="navbarDropdown_2">
-                                        <a class="dropdown-item" asp-action="index" asp-controller="Orders">product checkout</a>
-                                        <a class="dropdown-item" asp-action="Cart" asp-controller="Navigator">shopping cart</a>
+                                        <a class="dropdown-item" onclick="CheckOut()">product checkout</a>
+                                        <a class="dropdown-item" data-toggle="modal"
+                    data-target="#exampleModal">shopping cart</a>
                                     </div>
                                 </li>
 
@@ -109,33 +110,6 @@
                       <a class="dropdown-item" asp-action="AboutUs" asp-controller="Navigator">About Us</a>
                     </div>
                   </li>
-
-                  @if(User.IsInRole("Admin"))
-                  {
-                  <li class="nav-item dropdown">
-                    <a
-                      class="nav-link dropdown-toggle"
-                      href="blog.html"
-                      id="navbarDropdown_3"
-                      role="button"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Admin
-                    </a>
-                    <div
-                      class="dropdown-menu"
-                      aria-labelledby="navbarDropdown_2"
-                    >
-                    <a class="dropdown-item" asp-action="RegisterAdmin" asp-controller="Account">Register Admin</a>
-                      <a class="dropdown-item" asp-action="List" asp-controller="Products">Products List</a>
-                      <a class="dropdown-item" asp-action="Create" asp-controller="Products">Add Product</a>
-                      <a class="dropdown-item" asp-action="List" asp-controller="Categories">Categories List</a>
-                      <a class="dropdown-item" asp-action="Create" asp-controller="Categories">Add Category</a>
-                    </div>
-                  </li>
-                  }
                 </ul>
               </div>
               <div class="hearer_icon d-flex">
