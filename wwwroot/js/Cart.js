@@ -63,7 +63,7 @@ function ChangeQun(id, opration) {
     }
     UpdateProductQun(id, Qun);
     PriceElem.innerText = '$' + getProduct(id).price * Qun;
-    QunElemDetails = Qun;
+    QunElemDetails.value = Qun;
     //
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
 
