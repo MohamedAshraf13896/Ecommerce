@@ -16,7 +16,7 @@ function AddTOcart(productId, proName, proPrice ,proImg) {
     }
     else {
 
-        sessionUserProducts.push({ Id: productId, qun: 1, Name: proName, price: proPrice, img: proImg });
+        sessionUserProducts.push({ Id: +productId, qun: 1, Name: proName, price: +proPrice, img: proImg });
     }
 
     ////save to local storage
