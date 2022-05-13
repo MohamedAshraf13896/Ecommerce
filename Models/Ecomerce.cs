@@ -20,6 +20,8 @@ namespace Project.Models
             modelBuilder.Entity<OrderDetails>().HasKey(o => new { o.OrderID, o.ProductID });
             modelBuilder.Entity<ApplicationUser>().HasIndex(u => u.Email)
     .IsUnique();
+            modelBuilder.Entity<Order>().HasIndex(u => u.OrderNumber)
+    .IsUnique();
             base.OnModelCreating(modelBuilder);
 
         }

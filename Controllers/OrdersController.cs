@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +19,14 @@ namespace Project.Controllers
         private  IOrder_Repo orderRepo;
         private IPaymentRepo paymentRepo;
         private  IShipperRepo shipperRepo;
+        private UserManager<ApplicationUser> userManager;
 
-        public OrdersController(IOrder_Repo order_Repo, IPaymentRepo paymentRepo , IShipperRepo shipperRepo)
+        public OrdersController(IOrder_Repo order_Repo, IPaymentRepo paymentRepo , IShipperRepo shipperRepo,UserManager<ApplicationUser> _userManager)
         {
             this.orderRepo = order_Repo;
             this.paymentRepo = paymentRepo;
             this.shipperRepo = shipperRepo;
+            this.userManager = _userManager;
         }
 
         // GET: Orders
@@ -33,7 +37,7 @@ namespace Project.Controllers
         }
 
         // GET: Orders/Details/5
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         public  IActionResult Details(int? id)
         {
             if (id == null)
@@ -66,29 +70,28 @@ namespace Project.Controllers
             return View(order);
         }
 
-        // GET: Orders/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(string cart)
         {
-            ViewData["PaymentID"] = new SelectList(paymentRepo.GetAll(), "ID", "Type");
-            ViewData["ShipperID"] = new SelectList(shipperRepo.GetAll(), "ID", "CompanyName");
-            return View();
-        }
-
-        // POST: Orders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public  IActionResult Create([Bind("ID,OrderNumber,OrderDate,ShipDate,SubTotal,Discount,OrderTax,TotalPrice,IsPaid,ShipperID,PaymentID")] Order order)
-        {
-            if (ModelState.IsValid)
+            Random rnd = new Random();
+            string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            ApplicationUser user = await userManager.FindByIdAsync(id);
+            Order currentOrder = new Order()
             {
-                orderRepo.insert(order);    
-                return RedirectToAction(nameof(Index));
+                OrderNumber = rnd.Next(),
+                Address = user.Address,
+                OrderDate = DateTime.Now.Date,
+                ShipDate = DateTime.Now.AddDays(3).Date,
+                Discount = 10,
+                OrderTax = 1000,
+                IsPaid = false
+            };
+            int result = orderRepo.insert(currentOrder);
+            if(result == -1)
+            {
+                return Content("Operation Failed");
             }
-            ViewData["PaymentID"] = new SelectList(paymentRepo.GetAll(), "ID", "Type");
-            ViewData["ShipperID"] = new SelectList(shipperRepo.GetAll(), "ID", "CompanyName");
-            return View(order);
+            OrderDetails orderDetails = new OrderDetails();
+            return View();
         }
 
         // GET: Orders/Edit/5

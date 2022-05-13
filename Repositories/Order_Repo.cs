@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Project.Models;
+using System;
+
 namespace Project.Repositories
 {
     public class Order_Repo : IOrder_Repo
@@ -22,8 +24,17 @@ namespace Project.Repositories
         }
         public int insert(Order order)
         {
-            dp.Orders.Add(order);
-            return dp.SaveChanges();
+            try
+            {
+                dp.Orders.Add(order);
+                dp.SaveChanges();
+                int id = dp.Orders.SingleOrDefault(o => o.OrderNumber == order.OrderNumber).ID;
+                return id;
+            }
+            catch(Exception e)
+            {
+                 return -1;
+            }
         }
         public int update(Order order)
         {

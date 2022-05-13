@@ -13,10 +13,5 @@ namespace Project.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "Customer")]
-        public IActionResult Cart()
-        {
-            return View();
-        }
     }
 }

@@ -101,6 +101,12 @@ function GotToLogOut() {
     //clear local 
     localStorage.removeItem('CartProductList');
 }
+function CheckOut() {
+    let userCart = localStorage.getItem("CartProductList") || ""
+    $.ajax({
+        url: "/Orders/Create?cart=" + userCart
+    });
+}
 
 function getCartFromClaim() {
     
@@ -172,3 +178,4 @@ function CartItem(product) {
 `
         )
 }
+
