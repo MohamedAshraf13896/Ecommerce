@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "List";
     int x = 1;
-    Layout = "_CreateLayout";
+   Layout = "_AdminLayout";
 }
 
 <style>
@@ -58,9 +58,9 @@
                     <div class="country justify-content-center">@item.Rate</div>
                     <div class="country">@item.Category.Name</div>
 					<div class="visit">
-                        <a asp-action="Edit" asp-controller="Product" asp-route-id="@item.ID"><i class="fa-solid fa-pen-to-square" style="font-size:20px"></i></a>&nbsp;|&nbsp;
-                        <a asp-action="Details" asp-controller="Product" asp-route-id="@item.ID"><i class="fa-solid fa-circle-info" style="font-size:20px"></i></a>&nbsp;|&nbsp;
-                        <a asp-action="Delete" asp-controller="Product" asp-route-id="@item.ID"><i class="fa-solid fa-trash-can" style="font-size:20px"></i></a>
+                        <a asp-action="Edit" asp-controller="Products" asp-route-id="@item.ID"><i class="fa-solid fa-pen-to-square" style="font-size:20px"></i></a>&nbsp;|&nbsp;
+                        <a asp-action="Details" asp-controller="Products" asp-route-id="@item.ID"><i class="fa-solid fa-circle-info" style="font-size:20px"></i></a>&nbsp;|&nbsp;
+                        <a asp-action="Delete" asp-controller="Products" asp-route-id="@item.ID"><i class="fa-solid fa-trash-can" style="font-size:20px"></i></a>
                     </div>
 				</div>
                 }
