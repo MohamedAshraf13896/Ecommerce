@@ -50,6 +50,21 @@ namespace Project.Controllers
             return View(category);
         }
 
+        public IActionResult AdminDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var category = categoryRepository.GetById(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
         // GET: Categories/Create
         public IActionResult Create()
         {
