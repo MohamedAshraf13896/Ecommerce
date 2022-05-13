@@ -29,46 +29,11 @@ function AddTOcart(productId, proName, proPrice) {
 function LoadModalContent() {
     elm.innerHTML = '';
     if (sessionUserProducts.length!=0)
-    for (let product of sessionUserProducts) {
-        elm.innerHTML += `
-               <hr class="my-4">
-                  <div class="row mb-4 d-flex justify-content-between align-items-center">
-                    <div class="col-md-2 col-lg-2 col-xl-2">
-                      <img
-                        src="${product.img}"
-                        class="img-fluid rounded-3" alt="Cotton T-shirt">
-                    </div>
-                    <div class="col-md-3 col-lg-3 col-xl-3">
-                      <h6 class="text-muted">${product.Name}</h6>
-
-                    </div>
-                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                      <button class="btn btn-link px-2"
-                        onclick="ChangeQun('${product.Id}','-')">
-                        <i class="fas fa-minus"></i>
-                      </button>
-
-                            <span id="${product.Id}">${product.qun}</span>
-                  
-                      <button class="btn btn-link px-2"
-                        onclick="ChangeQun('${product.Id}','+')">
-                        <i class="fas fa-plus"></i>
-                      </button>
-                    </div>
-                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                      <h6 id="${product.Id}-" class="mb-0">$${product.price * product.qun}</h6>
-                    </div>
-                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                    <span class="iconify"  onclick="deleteFromCart('${product.Id}')" data-icon="ep:delete-filled" style="color: red;"></span>
-                    </div>
-                  </div>
-
-`
-
-        console.log("run");
+        for (let product of sessionUserProducts) {
+            elm.innerHTML += CartItem(product)
         }
     else
-        elm.innerHTML = '<h1> Buy somthing 😘 </h1> ' ;
+        elm.innerHTML = '<h1> GO and Buy somthing 😘 </h1> ' ;
 
 }
 
@@ -140,11 +105,14 @@ function getCartFromClaim() {
     fetch("/account/getUserCartClaim")
         .then(response => response.json())
         .then(data => {
-            localStorage.setItem("CartProductList", JSON.stringify(data));
             sessionUserProducts = JSON.parse(data)
+            // cart for not loged in users
+            if (sessionUserProducts.length == 0 && localStorage.getItem('CartProductList') )
+                sessionUserProducts = JSON.parse(localStorage.getItem('CartProductList'));
             LoadModalContent();
             document.getElementById('cartItemNumber').innerText = sessionUserProducts.length;
 
+            localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
 
         })
         .catch(err => console.log(err))
@@ -158,5 +126,47 @@ function ShowSnake() {
     console.log("show");
     var x = document.getElementById("snackbar");
     x.className = "show";
-    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 2000);
+}
+
+
+//cart item 
+
+function CartItem(product) {
+    return (
+        `
+               <hr class="my-4">
+                  <div class="row mb-4 d-flex justify-content-between align-items-center">
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                      <img
+                        src="${product.img}"
+                        class="img-fluid rounded-3" alt="Cotton T-shirt">
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                      <h6 class="text-muted">${product.Name}</h6>
+
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                      <button class="btn btn-link px-2"
+                        onclick="ChangeQun('${product.Id}','-')">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                            <span id="${product.Id}" style="font-size: x-large;font-weight: 600;">${product.qun}</span>
+                 
+                  
+                      <button class="btn btn-link px-2"
+                        onclick="ChangeQun('${product.Id}','+')">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                      <h6 id="${product.Id}-" class="mb-0">$${product.price * product.qun}</h6>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                    <span class="iconify"  onclick="deleteFromCart('${product.Id}')" data-icon="ep:delete-filled" style="color: red;"></span>
+                    </div>
+                  </div>
+
+`
+        )
 }
