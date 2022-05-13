@@ -21,8 +21,8 @@
                             <ul class="list">
                                 @foreach (var cat in Model.Categories)
                                 {
-                                    <li>
-                                        <a href="#">@cat.Name</a>
+                                    <li style="cursor:pointer;" onclick="CategoryFilter(@cat.ID)">
+                                        <a >@cat.Name</a>
                                     <span>(@cat.Products.Count().ToString())</span>
                                 </li>
                                }
@@ -31,47 +31,6 @@
                         </div>
                     </aside>
 
-                    <aside class="left_widgets p_filter_widgets">
-                        <div class="l_w_title">
-                            <h3>Product filters</h3>
-                        </div>
-                        <div class="widgets_inner">
-                            <ul class="list">
-                                <li>
-                                    <a href="#">Apple</a>
-                                </li>
-                                <li>
-                                    <a href="#">Asus</a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">Gionee</a>
-                                </li>
-                                <li>
-                                    <a href="#">Micromax</a>
-                                </li>
-                                <li>
-                                    <a href="#">Samsung</a>
-                                </li>
-                            </ul>
-                            <ul class="list">
-                                <li>
-                                    <a href="#">Apple</a>
-                                </li>
-                                <li>
-                                    <a href="#">Asus</a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">Gionee</a>
-                                </li>
-                                <li>
-                                    <a href="#">Micromax</a>
-                                </li>
-                                <li>
-                                    <a href="#">Samsung</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </aside>
 
                     <aside class="left_widgets p_filter_widgets">
                         <div class="l_w_title">
@@ -130,7 +89,7 @@
                             </div>
                             <div class="single_product_menu d-flex">
                                 <h5>short by : </h5>
-                                <select style='display:initial !important'>
+                                <select class="border-0 mx-2 pb-2" style='display:initial !important'>
                                     <option selected>name</option>
                                     <option value="1">price</option>
                                     <option value="2">product</option>
@@ -154,7 +113,7 @@
                     </div>
                 </div>
 
-                <div class="row align-items-center latest_product_inner">
+                <div id="ProductsArea" class="row align-items-center latest_product_inner">
                      
                 @*     product section*@
                     @foreach (var item in Model.Products)
@@ -202,4 +161,7 @@
 </section>
 
 
+@section Scripts{
+    <script src="/js/Filters.js"></script>
+}
 

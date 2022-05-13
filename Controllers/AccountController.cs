@@ -159,16 +159,16 @@ namespace Project.Controllers
         public async Task<IActionResult> getUserCartClaim()
         {
             var Claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-                if(Claim==null)
-                     return Json("[]");
-            else
+            string result = "[]";
+            if(Claim != null)
             {
                 string id = Claim.Value;
                 ApplicationUser user = await userManager.FindByIdAsync(id);
                 var claims = await userManager.GetClaimsAsync(user);
-                var result = claims.FirstOrDefault(c => c.Type == "Cart").Value;
-                return Json(result);
+                if (claims != null)
+                    result = claims.FirstOrDefault(c => c.Type == "Cart").Value;
             }    
+           return Json(result);
        
         }
 

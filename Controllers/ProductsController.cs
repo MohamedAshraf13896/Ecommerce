@@ -41,6 +41,16 @@ namespace Project.Controllers
             return View(productRepo.GetAll());
         }
 
+        public IActionResult CategoryFilterHome(int CategoryId)
+        {
+            return View("List", productRepo.GetProductsByCategory(CategoryId));
+        }
+
+        public IActionResult CategoryFilter(int id)
+        {
+            return PartialView(productRepo.GetProductsByCategory(id));
+        }
+
         // GET: Products/Details/5
         public IActionResult Details(int? id)
         {

@@ -9,6 +9,7 @@ namespace Project.Repositories
 
         int Edit(Product newProduct);
         List<Product> GetAll();
+        List<Product> GetProductsByCategory(int categoryId);
         Product GetById(int? id);
         Product GetByIdwithCategory(int? id);
         int Insert(Product prod);

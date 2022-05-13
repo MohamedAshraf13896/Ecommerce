@@ -24,6 +24,8 @@ namespace Project.Controllers
         {
             return View(categoryRepository.GetAll());
         }
+        
+
 
         //ADMIN ROLE
         // GET: Categories
