@@ -196,20 +196,35 @@ namespace Project.Controllers
 
         // GET: Products/Delete/5
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(Product pro)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var product =  productRepo.GetById(id);
+            var product =  productRepo.GetById(pro.ID);
             if (product == null)
             {
                 return NotFound();
             }
 
             return View(product);
+        }
+        public IActionResult getdelete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = productRepo.GetById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("delete", product);
         }
 
         // POST: Products/Delete/5
@@ -220,7 +235,7 @@ namespace Project.Controllers
         {
             imageRepo.DeleteImage(productRepo.GetById(id).Img);
             productRepo.DeleteById(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(List));
         }
 
         private bool ProductExists(int id)
