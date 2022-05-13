@@ -124,7 +124,8 @@
                             <div class="single_product_text">
                                 <h4>@item.Name</h4>
                                 <h3>@item.UnitPrice</h3>
-                                    <a   onclick="AddTOcart('@item.ID','@item.Name','@item.UnitPrice','@item.Img')"  name='@item.ID' class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                <a asp-action="Details" asp-controller="Products" asp-route-id="@item.ID"> More Details </a>
+                                    <a   onclick="AddTOcart('@item.ID','@item.Name','@item.UnitPrice','@item.Img')"  name='@item.ID' class="add_cart">+ add to cart<i class="fa fa-heart"></i></a>
                             </div>
                         </div>
                     }

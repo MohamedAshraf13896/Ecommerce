@@ -165,7 +165,7 @@ namespace Project.Controllers
                 string id = Claim.Value;
                 ApplicationUser user = await userManager.FindByIdAsync(id);
                 var claims = await userManager.GetClaimsAsync(user);
-                if (claims != null)
+                if (claims.Count != 0)
                     result = claims.FirstOrDefault(c => c.Type == "Cart").Value;
             }    
            return Json(result);

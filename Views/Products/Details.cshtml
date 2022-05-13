@@ -16,7 +16,7 @@
               <div data-thumb="/assets/img/product/@Model.Img">
                 <img src="/assets/img/product/@Model.Img" />
               </div>
-              <div data-thumb="/assets/img/product/@Model.Img">
+             @* <div data-thumb="/assets/img/product/@Model.Img">
                 <img src="/assets/img/product/@Model.Img" />
               </div>
               <div data-thumb="/assets/img/product/@Model.Img">
@@ -24,13 +24,13 @@
               </div>
               <div data-thumb="/assets/img/product/@Model.Img">
                 <img src="/assets/img/product/@Model.Img" />
-              </div>
+              </div>*@
             </div>
           </div>
         </div>
         <div class="col-lg-5 col-xl-4">
           <div class="s_product_text">
-            <h5>previous <span>|</span> next</h5>
+            @*<h5>previous <span>|</span> next</h5>*@
             <h3>@Model.Name</h3>
             <h2>$@Model.UnitPrice</h2>
             <ul class="list">
@@ -47,12 +47,12 @@
             </p>
             <div class="card_area d-flex justify-content-between align-items-center">
               <div class="product_count">
-                <span class="inumber-decrement"> <i class="ti-minus"></i></span>
-                <input class="input-number" type="text" value="1" min="0" max="10">
-                <span class="number-increment btn"> <i class="ti-plus"></i></span>
+                <span class="inumber-decrement" onclick="ChangeQun('@Model.ID', '-')"> <i class="fa fa-minus"></i></span>
+                <input id="DetailsCounter" class="input-number" type="text" value="1" min="0" max="10">
+                <span class="number-increment btn" onclick="ChangeQun('@Model.ID', '+')"> <i class="fa fa-plus"></i></span>
               </div>
-              <a href="#" class="btn_3">add to cart</a>
-              <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
+              <a onclick="AddTOcart('@Model.ID','@Model.Name','@Model.UnitPrice','@Model.Img')"  name='@Model.ID' class="add_cart">add to cart</a>
+              <a href="#" class="like_us"> <i class="fa fa-heart"></i> </a>
             </div>
           </div>
         </div>
