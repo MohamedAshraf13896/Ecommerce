@@ -8,7 +8,6 @@ namespace Project.Repositories
         int delete(int id);
         OrderDetails findByid(int id);
         List<OrderDetails> getall();
-        int insertMany(List<OrderDetails> order);
         int update(OrderDetails order);
     }
 }

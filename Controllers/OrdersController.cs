@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Project.Models;
 using Project.Repositories;
+using Project.ViewModels;
 
 namespace Project.Controllers
 {
@@ -85,12 +88,33 @@ namespace Project.Controllers
                 OrderTax = 1000,
                 IsPaid = false
             };
+            List<OrderDetails> orderDetailsList = new List<OrderDetails>();
+            JArray cartArray = JArray.Parse(cart);
+            foreach (var item in cartArray)
+            {
+                int prd = (int)item["qun"];
+
+                try
+                {
+                    orderDetailsList.Add(new OrderDetails()
+                    {
+                        Quantity = (int)item["qun"],
+                        Discount = 10,
+                        LinePrice = (int)item["price"] * (int)item["qun"],
+                        ProductID = (int)item["Id"]
+                    });
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            currentOrder.OrderDetails = orderDetailsList;
             int result = orderRepo.insert(currentOrder);
-            if(result == -1)
+            if (result == -1)
             {
                 return Content("Operation Failed");
             }
-            OrderDetails orderDetails = new OrderDetails();
             return View();
         }
 

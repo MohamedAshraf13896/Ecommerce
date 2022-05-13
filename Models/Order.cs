@@ -59,10 +59,10 @@ namespace Project.Models
 
         //Foreign Keys
         [ForeignKey("Shipper")]
-        public int ShipperID { get; set; }
+        public int? ShipperID { get; set; }
 
         [ForeignKey("Payment")]
-        public int PaymentID { get; set; }
+        public int? PaymentID { get; set; }
         [ForeignKey("Customer")]
         public string CustomerId { get; set; }
 
