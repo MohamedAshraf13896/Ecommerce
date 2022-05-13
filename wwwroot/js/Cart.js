@@ -100,12 +100,13 @@ function deleteProduct(proId) {
 }
 
 function GotToLogOut() {
-    let userCart = localStorage.getItem("CartProductList") || ""
-    $.ajax({
-        url: "/Account/logout?cart=" + userCart
-    });
+    let userCart = localStorage.getItem("CartProductList") || "[]"
+    //$.ajax({
+    //    url: "/Account/logout?cart=" + userCart
+    //});
 
     //clear local 
+    window.location.replace(`/Account/logout?cart=${userCart}`);
     localStorage.removeItem('CartProductList');
 }
 function CheckOut() {
