@@ -2,52 +2,57 @@
 
 @{
     ViewData["Title"] = "List";
+    Layout = "_CreateLayout";
+    int x = 1;
 }
 
-<h1>List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+<style>
+    .table-body{
+        height:30em;
+        overflow-x : auto;
+    }
+</style>
+
+<div class="container">
+<h1 class="l font-italic text-muted mt-3 text-center">Categories List</h1>
+<p class="mb-3 text-center">
+    <a class="btn btn-primary" asp-action="Create">Create New Product</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Img)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Img)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="row">
+        <div class="progress-table-wrap">
+			<div class="progress-table">
+				<div class="table-head">
+                    <div class="d-flex col-12">
+					<div class="serial col-1">#</div>
+					<div class="country col-3">Name</div>
+					<div class="country col-3">Image</div>
+					<div class="country col-3">Is Active</div>
+					<div class="country c0l-3">Cotrols</div>
+                    </div>
+				</div>
+                <div class="table-body">
+                @foreach (var item in Model) {
+				<div class="table-row">
+					<div class="serial">@x</div>
+                    @{x++;}
+					<div class="country">
+                        @item.Name
+                    </div>
+                    <div class="country">
+                            <img src="/assets/img/category/@item.Img" alt="img">
+                    </div>
+                    <div class="country">@item.IsActive</div>
+					<div class="visit">
+                        <a asp-action="Edit" asp-controller="Categories" asp-route-id="@item.ID"><i class="fa-solid fa-pen-to-square" style="font-size:20px"></i></a>&nbsp;|&nbsp;
+                        <a asp-action="Details" asp-controller="Categories" asp-route-id="@item.ID"><i class="fa-solid fa-circle-info" style="font-size:20px"></i></a>&nbsp;|&nbsp;
+                        <a asp-action="Delete" asp-controller="Categories" asp-route-id="@item.ID"><i class="fa-solid fa-trash-can" style="font-size:20px"></i></a>
+                    </div>
+				</div>
+                }
+                </div>
+			</div>
+		</div>
+    </div>
+</div>
+
