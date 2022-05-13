@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Project.Controllers
 {
@@ -12,6 +13,7 @@ namespace Project.Controllers
         {
             return View();
         }
+        [Authorize(Roles = "Customer")]
         public IActionResult Cart()
         {
             return View();

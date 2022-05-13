@@ -18,7 +18,10 @@ namespace Project.Models
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder) { 
             modelBuilder.Entity<OrderDetails>().HasKey(o => new { o.OrderID, o.ProductID });
+            modelBuilder.Entity<ApplicationUser>().HasIndex(u => u.Email)
+    .IsUnique();
             base.OnModelCreating(modelBuilder);
+
         }
 
         public virtual DbSet<Product> Products { get; set; }

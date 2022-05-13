@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project.ViewModels;
 using System.Threading.Tasks;
@@ -9,18 +10,21 @@ namespace Project.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
 
+        
         public RoleController(RoleManager<IdentityRole> roleManager)
         {
             this.roleManager = roleManager;
         }
 
         [HttpGet]//Role/Craete "Get"
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]//Role/Craete "post"
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(RoleVM newRole)
         {
             if (ModelState.IsValid == true)

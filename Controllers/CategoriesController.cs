@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project.Models;
 using Project.Repositories;
@@ -24,17 +25,19 @@ namespace Project.Controllers
         {
             return View(categoryRepository.GetAll());
         }
-        
+
 
 
         //ADMIN ROLE
         // GET: Categories
+        [Authorize(Roles = "Admin")]
         public IActionResult List()
         {
             return View(categoryRepository.GetAll());
         }
 
         // GET: Categories/Details/5
+        [Authorize(Roles = "Customer")]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -49,7 +52,7 @@ namespace Project.Controllers
 
             return View(category);
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult AdminDetails(int? id)
         {
             if (id == null)
@@ -66,6 +69,7 @@ namespace Project.Controllers
         }
 
         // GET: Categories/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -74,6 +78,7 @@ namespace Project.Controllers
         // POST: Categories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(Category category)
         {
             if (ModelState.IsValid)
@@ -98,6 +103,7 @@ namespace Project.Controllers
         }
 
         // GET: Categories/Edit/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             if (id == null)
@@ -118,6 +124,7 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, Category category)
         {
             if (id != category.ID)
@@ -155,6 +162,7 @@ namespace Project.Controllers
         }
 
         // GET: Categories/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -174,6 +182,7 @@ namespace Project.Controllers
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             imageRepo.DeleteImage(categoryRepository.GetById(id).Img);

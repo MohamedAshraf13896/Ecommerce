@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -25,13 +26,31 @@ namespace Project.Controllers
         }
 
         // GET: Orders
+        [Authorize(Roles = "Admin")]
         public  IActionResult Index()
         {
             return View(orderRepo.getall());
         }
 
         // GET: Orders/Details/5
+        [Authorize(Roles = "Customer")]
         public  IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var order = orderRepo.findByid(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
+        }
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminDetails(int? id)
         {
             if (id == null)
             {

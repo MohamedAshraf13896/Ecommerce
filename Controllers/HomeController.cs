@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Project.Models;
 using System;
@@ -22,6 +23,13 @@ namespace Project.Controllers
         {
             return RedirectToAction("Index","Categories");
         }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminIndex()
+        {
+            return View();
+        }
+
 
         public IActionResult Privacy()
         {

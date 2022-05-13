@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Project.Controllers
 {
@@ -44,6 +45,7 @@ namespace Project.Controllers
                 IdentityResult result = await userManager.CreateAsync(newUser, userVm.Password);
                 if (result.Succeeded)
                 {
+                    await userManager.AddToRoleAsync(newUser, "Customer");
                     await signInManager.SignInAsync(newUser, false);
                     return RedirectToAction("Index", "Categories");
                 }
@@ -91,6 +93,9 @@ namespace Project.Controllers
                         }
                         else
                         {
+                            // admin login
+
+                            //user
                             return RedirectToAction("Index", "Categories");
                         }
                     }
@@ -101,6 +106,7 @@ namespace Project.Controllers
         }
 
         //[HttpPost]
+        [Authorize]
         public async Task<IActionResult> Logout(string cart)
         {
             string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
@@ -119,6 +125,7 @@ namespace Project.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult RegisterAdmin()
         {
             return View();
@@ -126,6 +133,7 @@ namespace Project.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RegisterAdmin(RegisterVM userVm)
         {
             if (ModelState.IsValid)
@@ -156,6 +164,7 @@ namespace Project.Controllers
             return View(userVm);
         }
 
+        [Authorize(Roles ="Customer")]
         public async Task<IActionResult> getUserCartClaim()
         {
             var Claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
@@ -169,9 +178,6 @@ namespace Project.Controllers
                     result = claims.FirstOrDefault(c => c.Type == "Cart").Value;
             }    
            return Json(result);
-       
         }
-
     }
-
 }

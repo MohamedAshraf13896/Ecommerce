@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -36,10 +37,12 @@ namespace Project.Controllers
 
             return View(vm);
         }
+        [Authorize(Roles = "Admin")]
         public IActionResult List()
         {
             return View(productRepo.GetAll());
         }
+
 
         public IActionResult CategoryFilterHome(int CategoryId)
         {
@@ -67,7 +70,7 @@ namespace Project.Controllers
 
             return View(product);
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult AdminDetails(int? id)
         {
             if (id == null)
@@ -85,6 +88,7 @@ namespace Project.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["Categories"] = categoryRepository.GetAll();
@@ -96,6 +100,7 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create( Product product)
         {
             if (ModelState.IsValid)
@@ -122,6 +127,8 @@ namespace Project.Controllers
         }
 
         // GET: Products/Edit/5
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -143,6 +150,7 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id,  Product product)
         {
             if (id != product.ID)
@@ -181,6 +189,7 @@ namespace Project.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -200,6 +209,7 @@ namespace Project.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             imageRepo.DeleteImage(productRepo.GetById(id).Img);
