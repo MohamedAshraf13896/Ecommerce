@@ -98,7 +98,7 @@
     </div>
     <div class="flip-card-back overflow-auto">
       <h1 class="bg-secondary text-white">@cat.Name</h1>
-        <a href="#" class="feature_btn btn_2">EXPLORE NOW <i class="fas fa-play"></i></a>
+        <a asp-action="CategoryFilterHome" asp-controller="Products" asp-route-id="@cat.ID" class="feature_btn btn_2">EXPLORE NOW <i class="fas fa-play"></i></a>
       <p class="text-secondary ">@cat.Description</p>
     </div>
   </div>

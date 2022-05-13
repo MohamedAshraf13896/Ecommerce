@@ -34,7 +34,7 @@
             <ul class="list">
               <li>
                 <a class="active" href="#">
-                  <span>Category</span> : @Model.Category</a>
+                  <span>Category</span> : @Model.Category.Name</a>
               </li>
               <li>
                 <a href="#"> <span>Availibility</span> : In Stock</a>
@@ -473,8 +473,3 @@
   </section>
   <!--================End Product Description Area =================-->
  
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>

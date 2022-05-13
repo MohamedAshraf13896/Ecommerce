@@ -44,9 +44,15 @@ namespace Project.Controllers
         }
 
 
-        public IActionResult CategoryFilterHome(int CategoryId)
+        public IActionResult CategoryFilterHome(int id)
         {
-            return View("List", productRepo.GetProductsByCategory(CategoryId));
+            ProductCategoryVM vm = new ProductCategoryVM()
+            {
+                Categories = categoryRepository.GetAllWithProducts(),
+                Products = productRepo.GetProductsByCategory(id),
+
+            };
+            return View("Index", vm);
         }
 
         public IActionResult CategoryFilter(int id)

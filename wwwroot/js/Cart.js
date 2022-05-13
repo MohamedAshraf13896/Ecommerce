@@ -1,7 +1,12 @@
 ﻿
 
-let sessionUserProducts=[];
-getCartFromClaim();
+let sessionUserProducts = [];
+
+if (!localStorage.getItem('CartProductList'))
+    getCartFromClaim();
+else {
+    sessionUserProducts = JSON.parse(localStorage.getItem('CartProductList'));
+}
 
 let elm = document.getElementById('con');
 
@@ -46,6 +51,7 @@ function deleteFromCart(proId) {
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
 
 }
+
 function ChangeQun(id, opration) {
     let QunElem = document.getElementById(id);
     let QunElemDetails = document.getElementById('DetailsCounter');
@@ -63,7 +69,8 @@ function ChangeQun(id, opration) {
     }
     UpdateProductQun(id, Qun);
     PriceElem.innerText = '$' + getProduct(id).price * Qun;
-    QunElemDetails.value = Qun;
+    if (QunElemDetails)
+        QunElemDetails.value = Qun;
     //
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
 
@@ -102,10 +109,15 @@ function GotToLogOut() {
     localStorage.removeItem('CartProductList');
 }
 function CheckOut() {
+    $('#exampleModal').modal('hide');
     let userCart = localStorage.getItem("CartProductList") || ""
-    $.ajax({
-        url: "/Orders/Create?cart=" + userCart
-    });
+    window.location.replace(`/Orders/Create?cart=${userCart}`);
+    //$.ajax({
+    //    url: "/Orders/Create?cart=" + userCart,
+    //    success: function (dtat) {
+    //        console.log(data);
+    //    }
+    //});
 }
 
 function getCartFromClaim() {

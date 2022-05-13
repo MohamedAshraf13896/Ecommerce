@@ -85,9 +85,11 @@ namespace Project.Controllers
                 OrderDate = DateTime.Now.Date,
                 ShipDate = DateTime.Now.AddDays(3).Date,
                 Discount = 10,
-                OrderTax = 1000,
-                IsPaid = false
+                OrderTax = 14,
+                IsPaid = false,
+                CustomerId = id
             };
+            currentOrder.SubTotal = 0;
             List<OrderDetails> orderDetailsList = new List<OrderDetails>();
             JArray cartArray = JArray.Parse(cart);
             foreach (var item in cartArray)
@@ -96,26 +98,30 @@ namespace Project.Controllers
 
                 try
                 {
+                    int quanPrice = (int)item["price"] * (int)item["qun"];
+                    decimal CurrentlinePrice = (decimal)(quanPrice * 0.9);
                     orderDetailsList.Add(new OrderDetails()
                     {
                         Quantity = (int)item["qun"],
                         Discount = 10,
-                        LinePrice = (int)item["price"] * (int)item["qun"],
+                        LinePrice = CurrentlinePrice,
                         ProductID = (int)item["Id"]
                     });
+                    currentOrder.SubTotal += (decimal)CurrentlinePrice;
                 }
                 catch(Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
             }
+            currentOrder.TotalPrice = currentOrder.SubTotal * (1 - (currentOrder.Discount / 100) + (currentOrder.OrderTax / 100));
             currentOrder.OrderDetails = orderDetailsList;
             int result = orderRepo.insert(currentOrder);
             if (result == -1)
             {
                 return Content("Operation Failed");
             }
-            return View();
+            return RedirectToAction("Details",new { id = result });
         }
 
         // GET: Orders/Edit/5
