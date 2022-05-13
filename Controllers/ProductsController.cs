@@ -68,6 +68,22 @@ namespace Project.Controllers
             return View(product);
         }
 
+        public IActionResult AdminDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = productRepo.GetByIdwithCategory(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
         // GET: Products/Create
         public IActionResult Create()
         {

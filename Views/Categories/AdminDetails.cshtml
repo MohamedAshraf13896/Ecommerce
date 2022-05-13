@@ -1,0 +1,51 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "AdminDetails";
+    Layout = "~/Views/Shared/_CreateLayout.cshtml";
+}
+
+<!--================Single category Area =================-->
+  <div class="product_image_area section_padding">
+    <div class="container">
+      <div class="row s_product_inner justify-content-between">
+        <div class="col-lg-7 col-xl-7">
+          <div class="product_slider_img">
+            <div id="vertical">
+              <div data-thumb="/assets/img/category/@Model.Img">
+                <img src="/assets/img/category/@Model.Img" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 col-xl-4">
+          <div class="s_product_text">
+            <h3>@Model.Name</h3>
+            <ul class="list">
+              <li>
+                <a class="active" href="#">
+                                <span class="text-danger">State</span> : @if (@Model.IsActive)
+                                {
+                                   <span>Valid</span> 
+                                }
+                                else
+                                {
+                                    <span>Comming</span>
+                                }
+                            </a>
+                        </li>
+              <li>
+                <a href="#"> <span class="text-danger">Availibility</span> : @Model.IsActive</a>
+              </li>
+            </ul>
+            <p>
+              @Model.Description
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--================End Single category Area =================-->
+
+
+
