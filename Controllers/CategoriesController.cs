@@ -163,7 +163,23 @@ namespace Project.Controllers
 
         // GET: Categories/Delete/5
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Category cat)
+        {
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+
+            var category = categoryRepository.GetById(cat.ID);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        public IActionResult getdelete(int? id)
         {
             if (id == null)
             {
@@ -176,7 +192,7 @@ namespace Project.Controllers
                 return NotFound();
             }
 
-            return View(category);
+            return PartialView("delete", category);
         }
 
         // POST: Categories/Delete/5
@@ -187,7 +203,7 @@ namespace Project.Controllers
         {
             imageRepo.DeleteImage(categoryRepository.GetById(id).Img);
             categoryRepository.DeleteCagtegory(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(List));
         }
 
         private bool CategoryExists(int id)
