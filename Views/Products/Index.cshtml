@@ -23,7 +23,7 @@
                                 {
                                     <li>
                                         <a href="#">@cat.Name</a>
-                                    <span>(@{cat.Products.Count().ToString();})</span>
+                                    <span>(@cat.Products.Count().ToString())</span>
                                 </li>
                                }
                               
@@ -130,7 +130,7 @@
                             </div>
                             <div class="single_product_menu d-flex">
                                 <h5>short by : </h5>
-                                <select>
+                                <select style='display:initial !important'>
                                     <option selected>name</option>
                                     <option value="1">price</option>
                                     <option value="2">product</option>
@@ -138,13 +138,7 @@
                             </div>
                             <div class="single_product_menu d-flex">
                                 <h5>show :</h5>
-                                <div class="top_pageniation">
-                                    <ul>
-                                        <li>1</li>
-                                        <li>2</li>
-                                        <li>3</li>
-                                    </ul>
-                                </div>
+                              
                             </div>
                             <div class="single_product_menu d-flex">
                                 <div class="input-group">
@@ -161,18 +155,17 @@
                 </div>
 
                 <div class="row align-items-center latest_product_inner">
-
+                     
+                @*     product section*@
                     @foreach (var item in Model.Products)
                     {
                         
                           <div class="single_product_item col-4">
-
-                           
                             <img src="/assets/img/product/@item.Img" alt="">
                             <div class="single_product_text">
                                 <h4>@item.Name</h4>
                                 <h3>@item.UnitPrice</h3>
-                                    <a   onclick="AddTOcart('@item.ID','@item.Name','@item.UnitPrice')"  name='@item.ID' class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+                                    <a   onclick="AddTOcart('@item.ID','@item.Name','@item.UnitPrice','@item.Img')"  name='@item.ID' class="add_cart">+ add to cart<i class="ti-heart"></i></a>
                             </div>
                         </div>
                     }

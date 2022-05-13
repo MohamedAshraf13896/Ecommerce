@@ -8,7 +8,7 @@ let elm = document.getElementById('con');
 
 LoadModalContent();
  
-function AddTOcart(productId, proName, proPrice) {
+function AddTOcart(productId, proName, proPrice ,proImg) {
   
     let foundProduct = sessionUserProducts.find(p => p.Id == productId)
     if (foundProduct) {
@@ -16,7 +16,7 @@ function AddTOcart(productId, proName, proPrice) {
     }
     else {
 
-        sessionUserProducts.push({ Id: productId, qun: 1, Name: proName, price: proPrice, img:'test link ' });
+        sessionUserProducts.push({ Id: productId, qun: 1, Name: proName, price: proPrice, img: proImg });
     }
 
     ////save to local storage
@@ -139,7 +139,7 @@ function CartItem(product) {
                   <div class="row mb-4 d-flex justify-content-between align-items-center">
                     <div class="col-md-2 col-lg-2 col-xl-2">
                       <img
-                        src="${product.img}"
+                        src="/assets/img/product/${product.img}"
                         class="img-fluid rounded-3" alt="Cotton T-shirt">
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3">
