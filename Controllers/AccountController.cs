@@ -106,8 +106,14 @@ namespace Project.Controllers
             string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = await userManager.FindByIdAsync(id);
 
-            //add claims to db
-            await userManager.AddClaimAsync(user, new Claim("Cart", cart));
+            var ClaimList = await userManager.GetClaimsAsync(user);
+            if (ClaimList.Count == 0)
+                //add claims to db
+                await userManager.AddClaimAsync(user, new Claim("Cart", cart));
+            else
+                await userManager.ReplaceClaimAsync(user, ClaimList.FirstOrDefault(c => c.Type == "Cart"), new Claim("Cart", cart));
+
+
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
@@ -152,11 +158,18 @@ namespace Project.Controllers
 
         public async Task<IActionResult> getUserCartClaim()
         {
-            string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            ApplicationUser user = await userManager.FindByIdAsync(id);
-            var claims = await userManager.GetClaimsAsync(user);
-            var result = claims.FirstOrDefault(c => c.Type == "Cart").Value;
-            return Json(result);
+            var Claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+                if(Claim==null)
+                     return Json("[]");
+            else
+            {
+                string id = Claim.Value;
+                ApplicationUser user = await userManager.FindByIdAsync(id);
+                var claims = await userManager.GetClaimsAsync(user);
+                var result = claims.FirstOrDefault(c => c.Type == "Cart").Value;
+                return Json(result);
+            }    
+       
         }
 
     }

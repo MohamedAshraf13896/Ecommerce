@@ -1,8 +1,11 @@
 ﻿
 
-let sessionUserProducts = getCartFromClaim();
-console.log(sessionUserProducts);
+let sessionUserProducts=[];
+getCartFromClaim();
+
 let elm = document.getElementById('con');
+
+
 LoadModalContent();
  
 function AddTOcart(productId, proName, proPrice) {
@@ -13,15 +16,19 @@ function AddTOcart(productId, proName, proPrice) {
     }
     else {
 
-        sessionUserProducts.push({ Id: productId, qun: 1, Name: proName, price: proPrice, img:'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=200' });
+        sessionUserProducts.push({ Id: productId, qun: 1, Name: proName, price: proPrice, img:'test link ' });
     }
 
     ////save to local storage
-    localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));  
+    localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
+    document.getElementById('cartItemNumber').innerText = sessionUserProducts.length;
+    ShowSnake();
+    LoadModalContent();
 }
 
 function LoadModalContent() {
     elm.innerHTML = '';
+    if (sessionUserProducts.length!=0)
     for (let product of sessionUserProducts) {
         elm.innerHTML += `
                <hr class="my-4">
@@ -41,7 +48,7 @@ function LoadModalContent() {
                         <i class="fas fa-minus"></i>
                       </button>
 
-                            <span id="${product.Id}">1</span>
+                            <span id="${product.Id}">${product.qun}</span>
                   
                       <button class="btn btn-link px-2"
                         onclick="ChangeQun('${product.Id}','+')">
@@ -49,7 +56,7 @@ function LoadModalContent() {
                       </button>
                     </div>
                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                      <h6 id="${product.Id}-" class="mb-0">$${product.price}</h6>
+                      <h6 id="${product.Id}-" class="mb-0">$${product.price * product.qun}</h6>
                     </div>
                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                     <span class="iconify"  onclick="deleteFromCart('${product.Id}')" data-icon="ep:delete-filled" style="color: red;"></span>
@@ -57,13 +64,19 @@ function LoadModalContent() {
                   </div>
 
 `
-    }
+
+        console.log("run");
+        }
+    else
+        elm.innerHTML = '<h1> Buy somthing 😘 </h1> ' ;
+
 }
 
 function deleteFromCart(proId) {
 
     deleteProduct(proId);
     LoadModalContent();
+    document.getElementById('cartItemNumber').innerText = sessionUserProducts.length;
     //
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
 
@@ -117,12 +130,33 @@ function GotToLogOut() {
     $.ajax({
         url: "/Account/logout?cart=" + userCart
     });
+
+    //clear local 
+    localStorage.removeItem('CartProductList');
 }
 
 function getCartFromClaim() {
-    $.ajax({
-        url: "/account/getUserCartClaim", success: function (result) {
-            return JSON.parse(result);
-        }
-    });
+    
+    fetch("/account/getUserCartClaim")
+        .then(response => response.json())
+        .then(data => {
+            localStorage.setItem("CartProductList", JSON.stringify(data));
+            sessionUserProducts = JSON.parse(data)
+            LoadModalContent();
+            document.getElementById('cartItemNumber').innerText = sessionUserProducts.length;
+
+
+        })
+        .catch(err => console.log(err))
+
+    
+}
+
+// snakebar 
+
+function ShowSnake() {
+    console.log("show");
+    var x = document.getElementById("snackbar");
+    x.className = "show";
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
 }
