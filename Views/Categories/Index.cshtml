@@ -78,16 +78,35 @@
                     </div>
                 </div>
             </div>
-            <div class="row align-items-center justify-content-between ">
+            <div class="row align-items-center justify-content-evenly m-auto">
                 @foreach(var cat in Model){
-                    <div class="col-lg-6 col-sm-6">
+                   @* <div class="col-lg-6 col-sm-6">
                     <div class="single_feature_post_text">
                         <h3>Latest @cat.Name</h3>
                         <p>Click to display products list</p>
                         <a asp-action="Index" asp-controller="Products" class="feature_btn">EXPLORE NOW <i class="fas fa-play"></i></a>
                         <img src="/assets/img/category/@cat.Img" alt="">
                     </div>
-                    </div>
+                    </div>*@
+
+                   <div class="col-4 mt-2 mb-2">
+                       
+                   <div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <img src="/assets/img/category/@cat.Img" alt="Avatar" style="width:100%;height:100%;">
+    </div>
+    <div class="flip-card-back overflow-auto">
+      <h1 class="bg-secondary text-white">@cat.Name</h1>
+        <a href="#" class="feature_btn btn_2">EXPLORE NOW <i class="fas fa-play"></i></a>
+      <p class="text-secondary ">@cat.Description</p>
+    </div>
+  </div>
+</div>
+                   
+                   
+                   </div>
+
                 }
             </div>
         </div>
