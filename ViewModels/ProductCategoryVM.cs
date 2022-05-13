@@ -8,5 +8,8 @@ namespace Project.ViewModels
     {
         public List<Product> Products { get; set; }
         public List<Category>Categories { get; set; }
+        public int NumberOfPages { get; set; }
+        public string ActionName { get; set; }
+
     }
 }

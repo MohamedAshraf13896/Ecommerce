@@ -13,9 +13,9 @@ namespace Project.Repositories
             db = _db;
         }
 
-        public List<Product> GetAll()
+        public List<Product> GetAll( int page=0)
         {
-            return db.Products.Include(p=>p.Category).ToList();
+            return db.Products.Include(p=>p.Category).Skip(page*9).Take(9).ToList();
         }
 
         public Product GetById(int? id)
@@ -65,9 +65,19 @@ namespace Project.Repositories
             return db.Products.Include(p=>p.Category).SingleOrDefault(p => p.ID == id);
         }
 
-        public List<Product> GetProductsByCategory(int categoryId)
+        public List<Product> GetProductsByCategory(int categoryId, int page)
         {
-             return db.Products.Where(p=> p.CategoryID == categoryId).ToList();
+             return db.Products.Where(p=> p.CategoryID == categoryId).Skip(page * 9).Take(9).ToList();
+        }
+
+        public int ProdutsCount()
+        {
+            return db.Products.Count();
+        }
+
+        public int ProdutsCategoryCount(int id)
+        {
+             return db.Products.Where(p=>p.CategoryID==id).Count();
         }
     }
 }

@@ -6,7 +6,7 @@
 
 @*<p>       ADD This TO ADMIN ROLES
     <a asp-action="Create">Create New</a>
-</p>
+    </p>
 *@
 <section class="cat_product_area section_padding">
     <div class="container">
@@ -22,11 +22,11 @@
                                 @foreach (var cat in Model.Categories)
                                 {
                                     <li style="cursor:pointer;" onclick="CategoryFilter(@cat.ID)">
-                                        <a >@cat.Name</a>
-                                    <span>(@cat.Products.Count().ToString())</span>
-                                </li>
-                               }
-                              
+                                        <a>@cat.Name</a>
+                                        <span>(@cat.Products.Count().ToString())</span>
+                                    </li>
+                                }
+
                             </ul>
                         </div>
                     </aside>
@@ -57,27 +57,7 @@
                         </div>
                     </aside>
 
-                    <aside class="left_widgets p_filter_widgets price_rangs_aside">
-                        <div class="l_w_title">
-                            <h3>Price Filter</h3>
-                        </div>
-                        <div class="widgets_inner">
-                            <div class="range_item">
-                                <div id="slider-range"></div>
-                                <input type="text" class="js-range-slider" value="" />
-                                <div class="d-flex">
-                                    <div class="price_text">
-                                        <p>Price :</p>
-                                    </div>
-                                    <div class="price_value d-flex justify-content-center">
-                                        <input type="text" class="js-input-from" id="amount" readonly />
-                                        <span>to</span>
-                                        <input type="text" class="js-input-to" id="amount" readonly />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
+
                 </div>
             </div>
             <div class="col-lg-9">
@@ -87,25 +67,23 @@
                             <div class="single_product_menu">
                                 <p><span>10000 </span> Prodict Found</p>
                             </div>
-                            <div class="single_product_menu d-flex">
+                            <div class="single_product_menu d-flex align-items-center align-content-center">
                                 <h5>short by : </h5>
-                                <select class="border-0 mx-2 pb-2" style='display:initial !important'>
+                                <select class="border-0" style='display:initial !important'>
                                     <option selected>name</option>
                                     <option value="1">price</option>
                                     <option value="2">product</option>
                                 </select>
                             </div>
-                            <div class="single_product_menu d-flex">
-                                <h5>show :</h5>
-                              
-                            </div>
+
                             <div class="single_product_menu d-flex">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="search"
-                                        aria-describedby="inputGroupPrepend">
+                                           aria-describedby="inputGroupPrepend">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupPrepend"><i
-                                                class="ti-search"></i></span>
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="ti-search"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -114,55 +92,75 @@
                 </div>
 
                 <div id="ProductsArea" class="row align-items-center latest_product_inner">
-                     
-                @*     product section*@
+
+                    @*     product section*@
                     @foreach (var item in Model.Products)
                     {
-                        
-                          <div class="single_product_item col-4">
+
+                        <div class="single_product_item col-4">
                             <img src="/assets/img/product/@item.Img" alt="">
                             <div class="single_product_text">
                                 <h4>@item.Name</h4>
                                 <h3>@item.UnitPrice</h3>
                                 <a asp-action="Details" asp-controller="Products" asp-route-id="@item.ID"> More Details </a>
-                                    <a   onclick="AddTOcart('@item.ID','@item.Name','@item.UnitPrice','@item.Img')"  name='@item.ID' class="add_cart">+ add to cart<i class="fa fa-heart"></i></a>
+                                <a onclick="AddTOcart('@item.ID','@item.Name','@item.UnitPrice','@item.Img')" name='@item.ID' class="add_cart">+ add to cart<i class="fa fa-heart"></i></a>
                             </div>
                         </div>
                     }
-                    </div>
-          
-                    <div class="col-lg-12">
-                        <div class="pageination">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <i class="ti-angle-double-left"></i>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <i class="ti-angle-double-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+               
+
+                <div class="col-lg-12">
+                    <div class="pageination">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <i class="fa fa-angle-double-left"></i>
+                                    </a>
+                                </li>
+
+
+                                @{
+                                    switch (@Model.ActionName)
+                                    {
+                                        case "Index":
+
+                                                for (int i = 0, k = 1; i < @Model.NumberOfPages; k++, i++)
+                                                {
+                                                    <li class="page-item"><a class="page-link" asp-action=@Model.ActionName asp-controller="products" asp-route-id=@i> @k</a></li>
+                                                }
+                                            break;
+                                              case "CategoryFilterHome":
+
+                                                for (int i = 0, k = 1; i < @Model.NumberOfPages; k++, i++)
+                                                {
+                                                    <li class="page-item"><a class="page-link" asp-action=@Model.ActionName asp-controller="products" asp-route-id=@Model.Products[0].CategoryID  asp-route-page=@i> @k</a></li>
+                                                }
+                                            break;
+                                           
+                                    }
+
+                                }
+
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <i class=" fa fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
+
+                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 
 
 @section Scripts{
-    <script src="/js/Filters.js"></script>
+<script src="/js/Filters.js"></script>
 }
 

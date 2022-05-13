@@ -26,12 +26,15 @@ namespace Project.Controllers
         }
 
         // GET: Products
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
+              
             ProductCategoryVM vm = new ProductCategoryVM()
             {
                 Categories = categoryRepository.GetAllWithProducts(),
-                Products=productRepo.GetAll(),
+                Products = productRepo.GetAll(id),
+                NumberOfPages = (int)Math.Round(productRepo.ProdutsCount()/9.0),
+                ActionName = "Index"    
              
             };
 
@@ -44,20 +47,22 @@ namespace Project.Controllers
         }
 
 
-        public IActionResult CategoryFilterHome(int id)
+        public IActionResult CategoryFilterHome(int id ,int page =0 )
         {
             ProductCategoryVM vm = new ProductCategoryVM()
             {
                 Categories = categoryRepository.GetAllWithProducts(),
-                Products = productRepo.GetProductsByCategory(id),
-
+                Products = productRepo.GetProductsByCategory(id,page),
+                NumberOfPages= (int)Math.Round( productRepo.ProdutsCategoryCount(id)/9.0),
+                ActionName = "CategoryFilterHome"
             };
             return View("Index", vm);
         }
 
         public IActionResult CategoryFilter(int id)
         {
-            return PartialView(productRepo.GetProductsByCategory(id));
+            ViewBag.NumberOfPages = (int)Math.Round(productRepo.ProdutsCategoryCount(id) / 9.0);
+            return PartialView(productRepo.GetProductsByCategory(id, 0) );
         }
 
         // GET: Products/Details/5

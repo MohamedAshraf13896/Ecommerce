@@ -94,6 +94,10 @@ namespace Project.Controllers
                         else
                         {
                             // admin login
+                             var userRoles = await userManager.GetRolesAsync(user);
+                            if(userRoles[0]=="Admin")
+                            
+                                return RedirectToAction("AdminIndex", "Home");
 
                             //user
                             return RedirectToAction("Index", "Categories");

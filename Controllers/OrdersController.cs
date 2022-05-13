@@ -39,8 +39,9 @@ namespace Project.Controllers
             return View(orderRepo.getall());
         }
 
+        
         // GET: Orders/Details/5
-        //[Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         public  IActionResult Details(int? id)
         {
             if (id == null)
@@ -72,7 +73,7 @@ namespace Project.Controllers
 
             return View(order);
         }
-
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> Create(string cart)
         {
             Random rnd = new Random();
@@ -124,8 +125,10 @@ namespace Project.Controllers
             return RedirectToAction("Details",new { id = result });
         }
 
+        [Authorize(Roles = "Admin")]
+
         // GET: Orders/Edit/5
-        public  IActionResult Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -177,9 +180,9 @@ namespace Project.Controllers
             ViewData["ShipperID"] = new SelectList(shipperRepo.GetAll(), "ID", "CompanyName");
             return View(order);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Orders/Delete/5
-        public  IActionResult Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
