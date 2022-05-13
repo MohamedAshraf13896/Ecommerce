@@ -141,7 +141,7 @@
                 <a href="">
                     <i class="fa-solid fa-heart color-red" style="color:red"></i>
                 </a>
-                <div class="dropdown cart">
+                <div class="">
                   <a
                     class="dropdown-toggle"
                     href="#"
@@ -152,18 +152,25 @@
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    <i class="fa-solid fa-cart-shopping" style="color:blue"></i>
+                    <i class="fa-solid fa-cart-shopping"  style="color:blue">
+
+                        <span id="cartItemNumber" style="position: relative;
+                                 top: -10px;left: -2px;color: white;border-radius: 62%;
+                                 background: red;padding: 7px;font-size: xx-small; ">
+                            0
+                            </span>
+                    </i>
                   </a>
                 </div>
               </div>
               <ul class="navbar-nav">
               @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item">
+                        <li class="nav-item p-3">
                             Welcome @User.Identity.Name
                         </li> 
-                           <li class="nav-item">
-                        <a class="nav-link  btn btn-primary" asp-action="Logout" asp-controller="Account"> Logout</a>
+                           <li class="nav-item ">
+                        <a class="nav-link  btn btn-primary " onclick='GotToLogOut()' @*asp-action="Logout" asp-controller="Account"*@> Logout</a>
                       </li>         
                     }
                     else
@@ -266,7 +273,7 @@
         <div class="modal-dialog" role="document" style='max-width:50% !important'>
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -296,10 +303,10 @@
                     </section>
 
 
-                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button style='width:fit-content ' type="button" class="btn_2 " data-dismiss="modal">Close</button>
+                    <button style='width:fit-content' type="button" class="btn_2 ">Check out</button>
+                </div>
                 </div>
             </div>
         </div>
@@ -433,7 +440,9 @@
             </div>
         </div>
     </footer>
-    <!--::footer_part end::-->
+      <!--::footer_part end::-->
+    <!--Start of Snake bar -->
+    <div id="snackbar">Added to Cart..</div>
     <!-- jquery plugins here-->
     <script src="/js/jquery-1.12.1.min.js"></script>
     <!-- popper js -->
