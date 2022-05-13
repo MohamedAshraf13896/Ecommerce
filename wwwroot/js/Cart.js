@@ -48,6 +48,7 @@ function deleteFromCart(proId) {
 }
 function ChangeQun(id, opration) {
     let QunElem = document.getElementById(id);
+    let QunElemDetails = document.getElementById('DetailsCounter');
     let PriceElem = document.getElementById(id + '-');
     let Qun = +QunElem.innerText;
     switch (opration) {
@@ -62,6 +63,7 @@ function ChangeQun(id, opration) {
     }
     UpdateProductQun(id, Qun);
     PriceElem.innerText = '$' + getProduct(id).price * Qun;
+    QunElemDetails = Qun;
     //
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
 

@@ -1,0 +1,19 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "CategoryFilter";
+}
+
+@*     product section*@
+@foreach (var item in Model)
+{
+                        
+        <div class="single_product_item col-4">
+        <img src="/assets/img/product/@item.Img" alt="">
+        <div class="single_product_text">
+            <h4>@item.Name</h4>
+            <h3>@item.UnitPrice</h3>
+                <a   onclick="AddTOcart('@item.ID','@item.Name','@item.UnitPrice','@item.Img')"  name='@item.ID' class="add_cart">+ add to cart<i class="ti-heart"></i></a>
+        </div>
+    </div>
+}
+

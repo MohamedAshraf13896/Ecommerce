@@ -64,5 +64,10 @@ namespace Project.Repositories
         {
             return db.Products.Include(p=>p.Category).SingleOrDefault(p => p.ID == id);
         }
+
+        public List<Product> GetProductsByCategory(int categoryId)
+        {
+             return db.Products.Where(p=> p.CategoryID == categoryId).ToList();
+        }
     }
 }
