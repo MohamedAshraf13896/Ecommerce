@@ -59,7 +59,7 @@
                     <div class="country">@item.Category.Name</div>
 					<div class="visit">
                         <a asp-action="Edit" asp-controller="Products" asp-route-id="@item.ID"><i class="fa-solid fa-pen-to-square" style="font-size:20px"></i></a>&nbsp;|&nbsp;
-                        <a asp-action="Details" asp-controller="Products" asp-route-id="@item.ID"><i class="fa-solid fa-circle-info" style="font-size:20px"></i></a>&nbsp;|&nbsp;
+                        <a asp-action="AdminDetails" asp-controller="Products" asp-route-id="@item.ID"><i class="fa-solid fa-circle-info" style="font-size:20px"></i></a>&nbsp;|&nbsp;
                         <button type="button" class="border-0" onclick="whenClick(@item.ID)"  data-toggle="modal" data-target="#exampleModal"><i class="fa-solid fa-trash-can" style="font-size:20px" ></i></button>
                     </div>
 				</div>

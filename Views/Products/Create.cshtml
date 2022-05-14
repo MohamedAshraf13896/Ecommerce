@@ -10,7 +10,7 @@
 <div class="container ">
 	<h1 class="l font-italic text-muted">Create Product</h1>
 	<div class="section-top-border">
-		<div class=" row">
+		<div class=" row justify-content-center">
 			<div class="col-lg-8 col-md-8">
 				<form asp-action="Create" enctype="multipart/form-data">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -79,7 +79,7 @@
 							<span asp-validation-for="CategoryID" class="text-danger"></span>
 						</div>
 					</div>
-					<div class="mt-10">
+					<div class="mt-10 align-content-center">
 						<input type="submit" value="Create" class="btn btn-primary" />
 						<a asp-action="Index" class="btn btn-danger">Back to List</a>
 
