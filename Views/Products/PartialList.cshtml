@@ -1,0 +1,37 @@
+﻿@model List<Product>
+
+@{
+    ViewData["Title"] = "PartialList";
+    int x = 1;
+}
+
+  @foreach (var item in Model) {
+				<div class="table-row">
+					<div class="serial">@x</div>
+                    @{x++;}
+					<div class="country">
+                        @item.Name
+                    </div>
+                    <div class="country">
+                        @item.Description
+                    </div>
+                    <div class="country">
+                        @item.Color
+                    </div>
+                    <div class="country">
+                        @item.UnitPrice
+                    </div>
+                    <div class="country">@item.Discount</div>
+                    <div class="country">
+                            <img src="/assets/img/product/@item.Img" alt="img">
+                    </div>
+                            
+                    <div class="country justify-content-center">@item.Rate</div>
+                    <div class="country">@item.Category.Name</div>
+					<div class="visit">
+                        <a asp-action="Edit" asp-controller="Products" asp-route-id="@item.ID"><i class="fa-solid fa-pen-to-square" style="font-size:20px"></i></a>&nbsp;|&nbsp;
+                        <a asp-action="AdminDetails" asp-controller="Products" asp-route-id="@item.ID"><i class="fa-solid fa-circle-info" style="font-size:20px"></i></a>&nbsp;|&nbsp;
+                        <button type="button" class="border-0" onclick="whenClick(@item.ID)"  data-toggle="modal" data-target="#exampleModal"><i class="fa-solid fa-trash-can" style="font-size:20px" ></i></button>
+                    </div>
+				</div>
+                }

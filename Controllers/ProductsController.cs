@@ -41,9 +41,19 @@ namespace Project.Controllers
             return View(vm);
         }
         [Authorize(Roles = "Admin")]
-        public IActionResult List()
+        public IActionResult List( string name) 
         {
-            return View(productRepo.GetAll());
+            if(name==null)
+                return View(productRepo.getAllAdmin());
+            else
+                return View(productRepo.GetProductsByNameAdmin(name));
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult PartialList( string name)
+        {
+            return PartialView(productRepo.GetProductsByNameAdmin(name));
         }
 
 
@@ -61,8 +71,17 @@ namespace Project.Controllers
 
         public IActionResult CategoryFilter(int id)
         {
+            ViewBag.ActionName = "CategoryFilter";
             ViewBag.NumberOfPages = (int)Math.Round(productRepo.ProdutsCategoryCount(id) / 9.0);
             return PartialView(productRepo.GetProductsByCategory(id, 0) );
+        }
+
+        public IActionResult NameFilter(string name , int page=0)
+        {
+            ViewBag.ActionName = "NameFilter";
+            ViewBag.SearchName = name;
+            ViewBag.NumberOfPages = (int)Math.Round(productRepo.ProdutsNameCount(name) / 9.0);
+            return PartialView("CategoryFilter", productRepo.GetProductsByName(name, page));
         }
 
         // GET: Products/Details/5
@@ -124,7 +143,7 @@ namespace Project.Controllers
                     try
                     {
                         productRepo.Insert(product);
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(List));
                     }
                     catch (Exception ex)
                     {
@@ -193,7 +212,7 @@ namespace Project.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(List));
             }
             ViewData["CategoryID"] = new SelectList(categoryRepository.GetAll(), "ID", "Name");
             return View(product);
@@ -247,5 +266,6 @@ namespace Project.Controllers
         {
             return productRepo.GetAll().Any(p => p.ID == id);
         }
+
     }
 }

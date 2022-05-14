@@ -26,7 +26,29 @@
     <link rel="stylesheet" href="/css/style.css" />
 
     <link rel="stylesheet" href="/css/newcard.css" />
+     <style>
+    
 
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+            #myBtn:hover {
+                background-color: #555;
+            }
+    </style>
 
 </head>
 
@@ -86,108 +108,100 @@
                                          aria-labelledby="navbarDropdown_2">
                                         <a class="dropdown-item" onclick="CheckOut()">product checkout</a>
                                         <a class="dropdown-item" data-toggle="modal"
-                    data-target="#exampleModal">shopping cart</a>
+                                           data-target="#exampleModal">shopping cart</a>
                                     </div>
                                 </li>
 
-                  <li class="nav-item dropdown">
-                    <a
-                      class="nav-link dropdown-toggle"
-                      href="blog.html"
-                      id="navbarDropdown_3"
-                      role="button"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      About Us
-                    </a>
-                    <div
-                      class="dropdown-menu"
-                      aria-labelledby="navbarDropdown_2"
-                    >
-                      <a class="dropdown-item" asp-action="ContactUs" asp-controller="Navigator">Contact Us</a>
-                      <a class="dropdown-item" asp-action="AboutUs" asp-controller="Navigator">About Us</a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="hearer_icon d-flex">
-                <a id="search_1" href="javascript:void(0)">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </a>
-                <a href="">
-                    <i class="fa-solid fa-heart color-red" style="color:red"></i>
-                </a>
-                <div class="">
-                  <a
-                    class="dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown3"
-                    role="button"
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i class="fa-solid fa-cart-shopping"  style="color:blue">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle"
+                                       href="blog.html"
+                                       id="navbarDropdown_3"
+                                       role="button"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">
+                                        About Us
+                                    </a>
+                                    <div class="dropdown-menu"
+                                         aria-labelledby="navbarDropdown_2">
+                                        <a class="dropdown-item" asp-action="ContactUs" asp-controller="Navigator">Contact Us</a>
+                                        <a class="dropdown-item" asp-action="AboutUs" asp-controller="Navigator">About Us</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="hearer_icon d-flex">
+                            <a id="search_1" href="javascript:void(0)">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </a>
+                            <a href="">
+                                <i class="fa-solid fa-heart color-red" style="color:red"></i>
+                            </a>
+                            <div class="">
+                                <a class="dropdown-toggle"
+                                   href="#"
+                                   id="navbarDropdown3"
+                                   role="button"
+                                   data-toggle="modal"
+                                   data-target="#exampleModal"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">
+                                    <i class="fa-solid fa-cart-shopping" style="color:blue">
 
-                        <span id="cartItemNumber" style="position: relative;
+                                        <span id="cartItemNumber" style="position: relative;
                                  top: -10px;left: -2px;color: white;border-radius: 62%;
                                  background: red;padding: 7px;font-size: xx-small; ">
-                            0
-                            </span>
-                    </i>
-                  </a>
+                                            0
+                                        </span>
+                                    </i>
+                                </a>
+                            </div>
+                        </div>
+                        <ul class="navbar-nav">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item p-3">
+                                    Welcome @User.Identity.Name
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link  btn btn-primary " onclick='GotToLogOut()' @*asp-action="Logout" asp-controller="Account"*@> Logout</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link  btn btn-outline-primary mx-2" asp-action="Login" asp-controller="Account"> Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link  btn btn-primary text-white" asp-action="Register" asp-controller="Account"> Register</a>
+                                </li>
+
+                            }
+                        </ul>
+                    </nav>
                 </div>
-              </div>
-              <ul class="navbar-nav">
-              @if (User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item p-3">
-                            Welcome @User.Identity.Name
-                        </li> 
-                           <li class="nav-item ">
-                        <a class="nav-link  btn btn-primary " onclick='GotToLogOut()' @*asp-action="Logout" asp-controller="Account"*@> Logout</a>
-                      </li>         
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                        <a class="nav-link  btn btn-outline-primary mx-2" asp-action="Login" asp-controller="Account"> Login</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link  btn btn-primary text-white" asp-action="Register" asp-controller="Account"> Register</a>
-                      </li>
-                                    
-                    }
-                    </ul>
-            </nav>
-          </div>
+            </div>
         </div>
-      </div>
-      <div class="search_input" id="search_input_box">
-        <div class="container">
-          <form class="d-flex justify-content-between search-inner">
-            <input
-              type="text"
-              class="form-control"
-              id="search_input"
-              placeholder="Search Here"
-            />
-            <button type="submit" class="btn"></button>
-            <i class="fa fa-close mt-2 text-white" id="close_search"
-              title="Close Search"></i>
-          </form>
+        <div class="search_input" id="search_input_box">
+            <div class="container">
+                <form class="d-flex justify-content-between search-inner">
+                    <input type="text"
+                           class="form-control"
+                           id="search_input"
+                           placeholder="Search Here" />
+                    <button type="submit" class="btn"></button>
+                    <i class="fa fa-close mt-2 text-white" id="close_search"
+                       title="Close Search"></i>
+                </form>
+            </div>
         </div>
-      </div>
     </header>
     <!-- Header part end-->
     @RenderSection("topSection", required: false)
 
 
-            @RenderBody()
-     
+    @RenderBody()
+
 
     <!-- product_list part start-->
     <section class="product_list best_seller mt-4">
@@ -278,10 +292,10 @@
                     </section>
 
 
-                <div class="modal-footer">
-                    <button style='width:fit-content ' type="button" class="btn_2 " data-dismiss="modal">Close</button>
-                    <button onclick="CheckOut()" style='width:fit-content' type="button" class="btn_2 ">Check out</button>
-                </div>
+                    <div class="modal-footer">
+                        <button style='width:fit-content ' type="button" class="btn_2 " data-dismiss="modal">Close</button>
+                        <button onclick="CheckOut()" style='width:fit-content' type="button" class="btn_2 ">Check out</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -415,7 +429,7 @@
             </div>
         </div>
     </footer>
-      <!--::footer_part end::-->
+    <!--::footer_part end::-->
     <!--Start of Snake bar -->
     <div id="snackbar">Added to Cart..</div>
     <!-- jquery plugins here-->
@@ -445,11 +459,39 @@
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     <!-- custom js -->
     <script src="/js/custom.js"></script>
-      <!-- cart js -->
+    <!-- cart js -->
     <script src="/js/Cart.js"></script>
 
-     <!-- icon js -->
-     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+    <!-- icon js -->
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     @RenderSection("Scripts",required:false)
-</body>
+
+   
+    
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+      
+        <script>
+            //Get the button
+            var mybutton = document.getElementById("myBtn");
+
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+              if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+              } else {
+                mybutton.style.display = "none";
+              }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+              document.body.scrollTop = 0;
+              document.documentElement.scrollTop = 0;
+            }
+        </script>
+
+    </body>
 </html>

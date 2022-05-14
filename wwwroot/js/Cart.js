@@ -26,7 +26,7 @@ function AddTOcart(productId, proName, proPrice ,proImg) {
 
     ////save to local storage
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
-    document.getElementById('cartItemNumber').innerText = sessionUserProducts.length;
+    document.getElementById('cartItemNumber').innerText = CartTotalItem();
     ShowSnake();
     LoadModalContent();
 }
@@ -38,7 +38,8 @@ function LoadModalContent() {
             elm.innerHTML += CartItem(product)
         }
     else
-        elm.innerHTML = '<h1> GO and Buy somthing 😘 </h1> ' ;
+        elm.innerHTML = '<h1> GO and Buy something  </h1> ' ;
+    document.getElementById('cartItemNumber').innerText = CartTotalItem();
 
 }
 
@@ -46,7 +47,7 @@ function deleteFromCart(proId) {
 
     deleteProduct(proId);
     LoadModalContent();
-    document.getElementById('cartItemNumber').innerText = sessionUserProducts.length;
+    document.getElementById('cartItemNumber').innerText = CartTotalItem();
     //
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
 
@@ -56,14 +57,19 @@ function ChangeQun(id, opration) {
     let QunElem = document.getElementById(id);
     let QunElemDetails = document.getElementById('DetailsCounter');
     let PriceElem = document.getElementById(id + '-');
+    let minBtn = document.getElementById("minOpr");
     let Qun = +QunElem.innerText;
     switch (opration) {
         case '+':
+             minBtn.disabled = false ;
             QunElem.innerText = ++Qun;
             break;
         case '-':
-            if (Qun == 0)
+            if (Qun == 1) {
+                minBtn.disabled = true;
+
                 return
+            }
             QunElem.innerText = --Qun;
             break;
     }
@@ -73,6 +79,8 @@ function ChangeQun(id, opration) {
         QunElemDetails.value = Qun;
     //
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
+    document.getElementById('cartItemNumber').innerText = CartTotalItem();
+
 
 }
 
@@ -168,7 +176,7 @@ function CartItem(product) {
 
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                      <button class="btn btn-link px-2"
+                      <button id="minOpr" class="btn btn-link px-2"
                         onclick="ChangeQun('${product.Id}','-')">
                         <i class="fas fa-minus"></i>
                       </button>
@@ -180,7 +188,7 @@ function CartItem(product) {
                         <i class="fas fa-plus"></i>
                       </button>
                     </div>
-                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                    <div class="col-md-3 col-lg-3  p-0 text-center">
                       <h6 id="${product.Id}-" class="mb-0">$${product.price * product.qun}</h6>
                     </div>
                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
@@ -191,4 +199,9 @@ function CartItem(product) {
 `
         )
 }
+function CartTotalItem() {
+    let totalProduct = 0;
+    sessionUserProducts.map((i) => { totalProduct+= i.qun })
 
+    return totalProduct;
+}
