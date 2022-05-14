@@ -94,9 +94,9 @@ namespace Project.Controllers
                         else
                         {
                             // admin login
-                             var userRoles = await userManager.GetRolesAsync(user);
-                            if(userRoles[0]=="Admin")
-                            
+                            var userRoles = await userManager.GetRolesAsync(user);
+                            if (userRoles[0] == "Admin")
+
                                 return RedirectToAction("AdminIndex", "Home");
 
                             //user
@@ -127,7 +127,13 @@ namespace Project.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> LogoutAdmin(string cart)
+        {
 
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult RegisterAdmin()
@@ -168,20 +174,20 @@ namespace Project.Controllers
             return View(userVm);
         }
 
-        [Authorize(Roles ="Customer")]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> getUserCartClaim()
         {
             var Claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             string result = "[]";
-            if(Claim != null)
+            if (Claim != null)
             {
                 string id = Claim.Value;
                 ApplicationUser user = await userManager.FindByIdAsync(id);
                 var claims = await userManager.GetClaimsAsync(user);
                 if (claims.Count != 0)
                     result = claims.FirstOrDefault(c => c.Type == "Cart").Value;
-            }    
-           return Json(result);
+            }
+            return Json(result);
         }
     }
 }
