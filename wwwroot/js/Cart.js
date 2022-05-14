@@ -26,7 +26,7 @@ function AddTOcart(productId, proName, proPrice ,proImg) {
 
     ////save to local storage
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
-    document.getElementById('cartItemNumber').innerText = sessionUserProducts.length;
+    document.getElementById('cartItemNumber').innerText = CartTotalItem();
     ShowSnake();
     LoadModalContent();
 }
@@ -39,6 +39,7 @@ function LoadModalContent() {
         }
     else
         elm.innerHTML = '<h1> GO and Buy somthing 😘 </h1> ' ;
+    document.getElementById('cartItemNumber').innerText = CartTotalItem();
 
 }
 
@@ -46,7 +47,7 @@ function deleteFromCart(proId) {
 
     deleteProduct(proId);
     LoadModalContent();
-    document.getElementById('cartItemNumber').innerText = sessionUserProducts.length;
+    document.getElementById('cartItemNumber').innerText = CartTotalItem();
     //
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
 
@@ -73,6 +74,8 @@ function ChangeQun(id, opration) {
         QunElemDetails.value = Qun;
     //
     localStorage.setItem("CartProductList", JSON.stringify(sessionUserProducts));
+    document.getElementById('cartItemNumber').innerText = CartTotalItem();
+
 
 }
 
@@ -191,4 +194,9 @@ function CartItem(product) {
 `
         )
 }
+function CartTotalItem() {
+    let totalProduct = 0;
+    sessionUserProducts.map((i) => { totalProduct+= i.qun })
 
+    return totalProduct;
+}
