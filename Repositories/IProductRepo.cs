@@ -10,11 +10,13 @@ namespace Project.Repositories
         int Edit(Product newProduct);
         List<Product> GetAll(int page=0);
         List<Product> GetProductsByCategory(int categoryId, int page);
+        List<Product> GetProductsByName( string name, int page);
+        List<Product> getAllAdmin();
         Product GetById(int? id);
         Product GetByIdwithCategory(int? id);
         int Insert(Product prod);
         int ProdutsCount();
         int ProdutsCategoryCount(int id);
-
+        int ProdutsNameCount(string ProductName);
     }
 }

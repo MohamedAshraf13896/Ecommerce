@@ -7,11 +7,12 @@
 @foreach (var item in Model)
 {
 
-    <div class="single_product_item col-4">
+    <div class="single_product_item col-4  ">
         <img src="/assets/img/product/@item.Img" alt="">
         <div class="single_product_text">
             <h4>@item.Name</h4>
             <h3>@item.UnitPrice</h3>
+            <a asp-action="Details" asp-controller="Products" asp-route-id="@item.ID"> More Details </a>
             <a onclick="AddTOcart('@item.ID','@item.Name','@item.UnitPrice','@item.Img')" name='@item.ID' class="add_cart">+ add to cart<i class="ti-heart"></i></a>
         </div>
     </div>
@@ -28,9 +29,29 @@
                     </a>
                 </li>
 
-                @for (int i = 0, k = 1; i < ViewBag.NumberOfPages; k++, i++)
-                {
-                    <li class="page-item"><a class="page-link" asp-action="CategoryFilterHome" asp-controller="products" asp-route-id=@Model[0].CategoryID asp-route-page=@i> @k</a></li>
+
+                @{
+                    switch (ViewBag.ActionName)
+                    {
+                        case "CategoryFilter":
+
+                            for (int i = 0, k = 1; i < ViewBag.NumberOfPages; k++, i++)
+                            {
+                                <li class="page-item"><a class="cursor-pointer page-link" asp-action="CategoryFilterHome" asp-controller="products" asp-route-id=@Model[0].CategoryID asp-route-page=@i> @k</a></li>
+
+                            }
+                            break;
+                        case "NameFilter":
+
+                            for (int i = 0, k = 1; i < ViewBag.NumberOfPages; k++, i++)
+                            {
+                                <li class="page-item" ><a  onclick="PagiNameFilter('@ViewBag.SearchName','@i')" class="page-link cursor-pointer" > @k</a></li>
+                          
+                            }
+                            break;
+
+                    }
+
                 }
 
                 <li class="page-item">

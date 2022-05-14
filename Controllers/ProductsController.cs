@@ -41,9 +41,9 @@ namespace Project.Controllers
             return View(vm);
         }
         [Authorize(Roles = "Admin")]
-        public IActionResult List()
+        public IActionResult List() 
         {
-            return View(productRepo.GetAll());
+            return View(productRepo.getAllAdmin());
         }
 
 
@@ -61,8 +61,17 @@ namespace Project.Controllers
 
         public IActionResult CategoryFilter(int id)
         {
+            ViewBag.ActionName = "CategoryFilter";
             ViewBag.NumberOfPages = (int)Math.Round(productRepo.ProdutsCategoryCount(id) / 9.0);
             return PartialView(productRepo.GetProductsByCategory(id, 0) );
+        }
+
+        public IActionResult NameFilter(string name , int page=0)
+        {
+            ViewBag.ActionName = "NameFilter";
+            ViewBag.SearchName = name;
+            ViewBag.NumberOfPages = (int)Math.Round(productRepo.ProdutsNameCount(name) / 9.0);
+            return PartialView("CategoryFilter", productRepo.GetProductsByName(name, page));
         }
 
         // GET: Products/Details/5
@@ -124,7 +133,7 @@ namespace Project.Controllers
                     try
                     {
                         productRepo.Insert(product);
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(List));
                     }
                     catch (Exception ex)
                     {
@@ -193,7 +202,7 @@ namespace Project.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(List));
             }
             ViewData["CategoryID"] = new SelectList(categoryRepository.GetAll(), "ID", "Name");
             return View(product);

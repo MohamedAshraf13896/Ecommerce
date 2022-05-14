@@ -91,7 +91,7 @@ namespace Project.Controllers
                     try
                     {
                         categoryRepository.CreateCagtegory(category);
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(List));
                     }
                     catch (Exception ex)
                     {
@@ -156,7 +156,7 @@ namespace Project.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(List));
             }
             return View(category);
         }

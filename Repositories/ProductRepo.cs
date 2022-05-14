@@ -70,6 +70,10 @@ namespace Project.Repositories
              return db.Products.Where(p=> p.CategoryID == categoryId).Skip(page * 9).Take(9).ToList();
         }
 
+        public List<Product> getAllAdmin()
+        {
+            return db.Products.Include(p=>p.Category).ToList();
+        }
         public int ProdutsCount()
         {
             return db.Products.Count();
@@ -78,6 +82,17 @@ namespace Project.Repositories
         public int ProdutsCategoryCount(int id)
         {
              return db.Products.Where(p=>p.CategoryID==id).Count();
+        }
+
+        public List<Product> GetProductsByName(string name, int page)
+        {
+            var res = db.Products.Where(p => p.Name.Contains(name)).Skip(page*9).Take(9).ToList();
+            return res;
+        }
+
+        public int ProdutsNameCount(string ProductName)
+        {
+            return db.Products.Where(p => p.Name.Contains(ProductName)).Count();
         }
     }
 }
