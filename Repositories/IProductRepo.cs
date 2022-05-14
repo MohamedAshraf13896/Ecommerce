@@ -11,6 +11,7 @@ namespace Project.Repositories
         List<Product> GetAll(int page=0);
         List<Product> GetProductsByCategory(int categoryId, int page);
         List<Product> GetProductsByName( string name, int page);
+        public List<Product> GetProductsByNameAdmin(string name);
         List<Product> getAllAdmin();
         Product GetById(int? id);
         Product GetByIdwithCategory(int? id);

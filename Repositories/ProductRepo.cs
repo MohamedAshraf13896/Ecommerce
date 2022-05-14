@@ -13,9 +13,9 @@ namespace Project.Repositories
             db = _db;
         }
 
-        public List<Product> GetAll( int page=0)
+        public List<Product> GetAll(int page = 0)
         {
-            return db.Products.Include(p=>p.Category).Skip(page*9).Take(9).ToList();
+            return db.Products.Include(p => p.Category).Skip(page * 9).Take(9).ToList();
         }
 
         public Product GetById(int? id)
@@ -62,17 +62,17 @@ namespace Project.Repositories
 
         public Product GetByIdwithCategory(int? id)
         {
-            return db.Products.Include(p=>p.Category).SingleOrDefault(p => p.ID == id);
+            return db.Products.Include(p => p.Category).SingleOrDefault(p => p.ID == id);
         }
 
         public List<Product> GetProductsByCategory(int categoryId, int page)
         {
-             return db.Products.Where(p=> p.CategoryID == categoryId).Skip(page * 9).Take(9).ToList();
+            return db.Products.Where(p => p.CategoryID == categoryId).Skip(page * 9).Take(9).ToList();
         }
 
         public List<Product> getAllAdmin()
         {
-            return db.Products.Include(p=>p.Category).ToList();
+            return db.Products.Include(p => p.Category).ToList();
         }
         public int ProdutsCount()
         {
@@ -81,12 +81,12 @@ namespace Project.Repositories
 
         public int ProdutsCategoryCount(int id)
         {
-             return db.Products.Where(p=>p.CategoryID==id).Count();
+            return db.Products.Where(p => p.CategoryID == id).Count();
         }
 
         public List<Product> GetProductsByName(string name, int page)
         {
-            var res = db.Products.Where(p => p.Name.Contains(name)).Skip(page*9).Take(9).ToList();
+            var res = db.Products.Where(p => p.Name.Contains(name)).Skip(page * 9).Take(9).ToList();
             return res;
         }
 
@@ -94,5 +94,14 @@ namespace Project.Repositories
         {
             return db.Products.Where(p => p.Name.Contains(ProductName)).Count();
         }
+
+        public List<Product> GetProductsByNameAdmin(string name)
+        {
+            var res = db.Products.Include(p=>p.Category).Where(p => p.Name.Contains(name)).ToList();
+            return res;
+
+        }
+
+      
     }
-}
+    }

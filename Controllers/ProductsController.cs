@@ -41,9 +41,19 @@ namespace Project.Controllers
             return View(vm);
         }
         [Authorize(Roles = "Admin")]
-        public IActionResult List() 
+        public IActionResult List( string name) 
         {
-            return View(productRepo.getAllAdmin());
+            if(name==null)
+                return View(productRepo.getAllAdmin());
+            else
+                return View(productRepo.GetProductsByNameAdmin(name));
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult PartialList( string name)
+        {
+            return PartialView(productRepo.GetProductsByNameAdmin(name));
         }
 
 
@@ -256,5 +266,6 @@ namespace Project.Controllers
         {
             return productRepo.GetAll().Any(p => p.ID == id);
         }
+
     }
 }
